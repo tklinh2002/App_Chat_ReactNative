@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 const OutSideChat = ()=>{
     return(
         <Stack.Navigator 
-        initialRouteName="Home"
+        initialRouteName="Chat"
         screenOptions={{
           headerTintColor: 'white',
           headerStyle: { backgroundColor: '#00FF00' },
