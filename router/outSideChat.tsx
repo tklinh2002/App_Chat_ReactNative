@@ -1,11 +1,10 @@
 import { NavigationContainer,CommonActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import StartScreen from '../screens/homeScreen'
-import SignInScreen from '../screens/signInScreen'
-import HomeScreen from '../screens/homeScreen';
+import SignInScreen from '../screens/signInScreen/index'
+import HomeScreen from '../screens/homeScreen/index';
 import InSideChat from './inSideChat';
-import FindScreen from '../screens/findScreen';
-import ChatScreen from '../screens/chatScreen';
+import FindScreen from '../screens/findScreen/index';
+import ChatScreen from '../screens/chatScreen/index';
 
 
 const Stack = createNativeStackNavigator();
@@ -13,7 +12,7 @@ const Stack = createNativeStackNavigator();
 const OutSideChat = ()=>{
     return(
         <Stack.Navigator 
-        initialRouteName="Chat"
+        initialRouteName="Home"
         screenOptions={{
           headerTintColor: 'white',
           headerStyle: { backgroundColor: '#00FF00' },

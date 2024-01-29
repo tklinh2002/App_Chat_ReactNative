@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import ChatScreen from '../screens/listChatScreen';
-import ContactScreen from '../screens/contactScreen';
-import ProfileScreen from '../screens/profileScreen';
+import ContactScreen from '../screens/contacScreen/index';
+import ProfileScreen from '../screens/profileScreen/index';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FindScreen from '../screens/findScreen';
-import ListChatScreen from '../screens/listChatScreen';
+import ListChatScreen from '../screens/listChatScreen/index';
 
 
 const Tab = createBottomTabNavigator();

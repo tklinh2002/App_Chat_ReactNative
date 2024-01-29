@@ -12,8 +12,7 @@ import FindScreen from './screens/findScreen';
 const App = () => {
   return (
     <NavigationContainer>
-      {/* <OutSideChat/> */}
-    <OutSideChat/>
+      <OutSideChat/>
     </NavigationContainer>
     
   );

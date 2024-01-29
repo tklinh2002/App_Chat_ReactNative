@@ -1,9 +1,8 @@
 import { View, Text,StyleSheet } from "react-native"
-import Header from "./components/header"
+import Header from "../components/headerFind"
 import  Icon  from "react-native-vector-icons/Ionicons"
-import { white, backgroundHeader } from "../assets/colors"
-
-const ContactScreen = ()=>{
+import { white, backgroundHeader } from "../../assets/colors"
+const ProfileScreen = () => {
     return(
         <View>
             <View style={styles.header}>
@@ -21,4 +20,4 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     }
 })
-export default ContactScreen
+export default ProfileScreen

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, KeyboardAvoidingView } from "react-native"
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useState } from "react";
 
@@ -31,10 +31,10 @@ const SignInScreen = ()=>{
         );
       };
     return(
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
         <Text style={styles.text}>Vui lòng nhập só điện thoại và mật khẩu để đăng nhập</Text>
         <View style={styles.input}>
-            <TextInput style={styles.textInput} placeholder="Số điện thoại" onChangeText={handPhoneNumber} value={phoneNumber}/> 
+            <TextInput style={styles.textInput} placeholder="Số điện thoại" keyboardType="number-pad" onChangeText={handPhoneNumber} value={phoneNumber}/> 
             <Text style={styles.icon} onPress={deleteTextPhone}>{phoneNumber===''?'':'x'}</Text>
         </View>
         <View style={styles.input}>
@@ -45,7 +45,7 @@ const SignInScreen = ()=>{
         <TouchableOpacity style={styles.button} onPress={handPressLogin}>
             <Text style={{color:"#FFFFFF", fontSize:20, textAlign: "center"}}>Đăng nhập</Text>
         </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
     )
 };
 
