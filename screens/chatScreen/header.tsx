@@ -1,5 +1,6 @@
 import { View, Text } from "react-native"
 import Icon from "react-native-vector-icons/AntDesign"
+import IconSimpleLineIcons from "react-native-vector-icons/SimpleLineIcons"
 import IconFoundation from "react-native-vector-icons/Foundation"
 import styles from "./styles"
 import { useNavigation } from "@react-navigation/native"
@@ -18,7 +19,7 @@ const HearderChat = () => {
             <Text style={styles.headerText}>Linh</Text>
             <View style={styles.iconContainer}>
                 <TouchableOpacity>
-                    <Icon style={styles.icon} name="phone" color="#ffffff" size={30} />
+                    <IconSimpleLineIcons style={styles.icon} name="phone" color="#ffffff" size={30} />
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <Icon style={styles.icon} name="videocamera" color="#ffffff" size={30} />

@@ -5,15 +5,16 @@ import ContactScreen from '../screens/contacScreen/index';
 import ProfileScreen from '../screens/profileScreen/index';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ListChatScreen from '../screens/listChatScreen/index';
+import TabContact from './tabContact';
+import Header from '../screens/components/headerFind';
 
 
 const Tab = createBottomTabNavigator();
-const FindStack = createNativeStackNavigator();
 
-const InSideChat = ()=>{
-    return(
-        <Tab.Navigator
-      initialRouteName="ListChat"
+const TabChat = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName="TabContact"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
       }}
@@ -26,18 +27,18 @@ const InSideChat = ()=>{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="chat" color={color} size={size} />
           ),
-          headerShown:false
+          header:()=><Header/>
         }}
       />
       <Tab.Screen
-        name="Contact"
-        component={ContactScreen}
+        name="TabContact"
+        component={TabContact}
         options={{
           tabBarLabel: 'Danh bạ',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="contacts" color={color} size={size} />
           ),
-          headerShown:false
+          header:()=><Header/>
         }}
       />
       <Tab.Screen
@@ -48,12 +49,12 @@ const InSideChat = ()=>{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
-          headerShown:false
+          header:()=><Header/>
         }}
       />
     </Tab.Navigator>
-    
-    )
+
+  )
 }
 
-export default InSideChat
+export default TabChat

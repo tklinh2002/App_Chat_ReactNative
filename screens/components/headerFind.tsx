@@ -1,11 +1,12 @@
 import React from "react";
-import { TouchableOpacity, View , Text} from "react-native";
+import { TouchableOpacity, View , Text,StyleSheet} from "react-native";
 import Icon  from "react-native-vector-icons/Entypo";
 import { useNavigation} from '@react-navigation/native';
+import { backgroundHeader } from "../../assets/colors";
 const Header = ()=>{
     const navigation = useNavigation()
     return (
-            <View>
+            <View style={styles.header}>
                 <TouchableOpacity 
                 style={{
                     flexDirection:"row",
@@ -17,8 +18,15 @@ const Header = ()=>{
                     <Icon name="magnifying-glass" color="#ffffff" size={30}/>
                     <Text style={{fontSize:15, marginLeft:"10%", marginTop:"2%", color:"#ffffff"}}>Tìm kiếm</Text>
                 </TouchableOpacity>
-
             </View>
     )
 }
+const styles = StyleSheet.create({
+    header:{
+        backgroundColor:backgroundHeader,
+        flexDirection:"row",
+        paddingTop:"12%",
+        justifyContent: "space-between",
+    }
+})
 export default Header;
