@@ -7,13 +7,13 @@ import SendChat from "./sendchat"
 import ReceiveChat from "./receivechat"
 import InputChat from "./inputChat"
 import styles from "./styles"
-import HearderChat from "./header"
+import HeaderChat from "./header"
 
 const ChatScreen = ()=>{ 
     return(
         <KeyboardAvoidingView style={{flex:1}} keyboardVerticalOffset={2} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <View style={styles.header}>
-                <HearderChat/>
+                <HeaderChat/>
             </View>
 
             <ScrollView style={styles.bodyChat}>

@@ -7,12 +7,15 @@ import { useNavigation } from "@react-navigation/native"
 import { TouchableOpacity } from "react-native"
 
 
+
 const HearderChat = () => {
     const navigation = useNavigation()
     const backNavigation = () => {
         navigation.goBack();
     }
-
+    const handOption=()=>{
+        navigation.navigate('Option' as never)
+    }
     return (
         <View style={styles.rowContainer}>
             <Icon name="left" color="#ffffff" size={30} onPress={backNavigation} />
@@ -24,7 +27,7 @@ const HearderChat = () => {
                 <TouchableOpacity>
                     <Icon style={styles.icon} name="videocamera" color="#ffffff" size={30} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handOption}>
                     <IconFoundation style={styles.icon} name="list-bullet" color="#ffffff" size={30} />
                 </TouchableOpacity>
             </View>

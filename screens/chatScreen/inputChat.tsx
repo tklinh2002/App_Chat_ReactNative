@@ -6,7 +6,7 @@ import styles from "./styles"
 import IconFeather from "react-native-vector-icons/Feather";
 import IconIonicons from "react-native-vector-icons/Ionicons";
 import IconAntDesign from "react-native-vector-icons/AntDesign";
-
+import IconSimpleLineIcons from "react-native-vector-icons/SimpleLineIcons"
 const InputChat = () => {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => {
@@ -40,9 +40,9 @@ const InputChat = () => {
       <View style={[styles.inputIcon, iconStyle]}>
         {text === '' ? (
           <>
-            <IconIonicons name="attach" color="black" size={30} />
-            <IconFeather name="mic" color="black" size={30} />
-            <IconAntDesign name="picture" color="black" size={30} />
+            <IconSimpleLineIcons name="paper-clip" color="black" size={30} />
+            <IconSimpleLineIcons name="microphone" color="black" size={30} />
+            <IconSimpleLineIcons name="picture" color="black" size={30} />
           </>
         ) : (
           <IconFeather name="send" color={backgroundHeader} size={30} />

@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native"
 import { backgroundHeader, white } from "../../assets/colors"
 
 
-const Hearder = ({title}) => {
+const Header = ({title}) => {
     const navigation = useNavigation()
     const backNavigation = () => {
         navigation.goBack();
@@ -33,4 +33,4 @@ const styles = StyleSheet.create({
         marginLeft:10
     }
 })
-export default Hearder
+export default Header
