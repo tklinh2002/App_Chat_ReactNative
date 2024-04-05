@@ -2,11 +2,11 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ContactScreen from '../screens/contacScreen/index';
-import ProfileScreen from '../screens/profileScreen/index';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ListChatScreen from '../screens/listChatScreen/index';
 import TabContact from './tabContact';
 import Header from '../screens/components/headerFind';
+import ProfileScreen from '../screens/profileScreen/ProfileScreen';
 
 
 const Tab = createBottomTabNavigator();

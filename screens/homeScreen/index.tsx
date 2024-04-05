@@ -32,7 +32,7 @@ const HomeScreen = () => {
       />
       <Button
         title="Đăng Ký"
-        onPress={() => navigation.navigate("SignUp" as never)}
+        onPress={() => navigation.navigate("RegisterForm" as never)}
         titleStyle={{ fontWeight: '500', fontSize: 30 }}
         buttonStyle={{
           backgroundColor: 'gray',

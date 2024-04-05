@@ -6,15 +6,16 @@ import {
   Button,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginAPI } from "../../apis/auth.api";
 import axios from "axios";
 
-const SignInScreen = () => {
-  const navigation = useNavigation();
+const SignInScreen = ({ navigation }) => {
+  const queryClient = useQueryClient();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isPWSecure, setPWSecure] = useState(true);
@@ -28,17 +29,40 @@ const SignInScreen = () => {
   const handPhoneNumber = (phone) => {
     setPhoneNumber(phone);
   };
-  const login =  useMutation({
-      mutationFn:async (_) => loginAPI(phoneNumber, password),
-      onSuccess:(data)=>{
-          console.log(data)
-      }
-  })
-  
-  const handPressLogin = async () => {
-    login.mutate()
-};
 
+  const login = useMutation({
+    mutationFn: async (_) => loginAPI(phoneNumber, password),
+    onSuccess: (data) => {
+      queryClient.setQueryData(["dataLogin"], data.data);
+      console.log(data.data);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'TabChat' }],
+    });
+    },
+    onError: (error) => {
+      Alert.alert(
+        "Lỗi",
+        "Sai số điện thoại hoặc mật khẩu",
+        [
+          {
+            text: "OK",
+            onPress: () => console.log("OK Pressed"),
+            style: "default",
+          },
+        ],
+        { cancelable: false }
+      );
+      console.log(error);
+    },
+  });
+
+  const handPressLogin = async () => {
+    login.mutate();
+  };
+  const handPressForgetPassWord = () => {
+    navigation.navigate("ForgetPassword" as never);
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -69,9 +93,13 @@ const SignInScreen = () => {
           {isPWSecure ? "Hiện" : "Ẩn"}
         </Text>
       </View>
-      <Text style={{ color: "#0080FF", fontWeight: "bold", marginLeft: "2%" }}>
-        Lấy lại mật khẩu
-      </Text>
+      <TouchableOpacity onPress={handPressForgetPassWord}>
+        <Text
+          style={{ color: "#0080FF", fontWeight: "bold", marginLeft: "2%" }}
+        >
+          Lấy lại mật khẩu
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handPressLogin}>
         <Text style={{ color: "#FFFFFF", fontSize: 20, textAlign: "center" }}>
           Đăng nhập
