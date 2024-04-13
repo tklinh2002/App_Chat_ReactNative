@@ -34,4 +34,11 @@ export const registerAPI = (
   });
   return http.post("/v1/auth/register", body, { headers }); 
 };
+
+export const getProfileAPI = (token: string) =>
+  http.get("/v1/users/profile", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 // export const registerAPI = (phone: string) =>http.post("/v1/verification/otp/sms/send", { phone});

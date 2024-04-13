@@ -1,0 +1,640 @@
+[{
+  "_id": {
+    "$oid": "6602137187c1ef000f268f63"
+  },
+  "phone": "0354927402",
+  "password": "$2a$10$bqFgTG7YzVeconngDois.Ob8TUHRs2m9riPWjDwEfu28yBAJdjife",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-03-26T00:14:41.513Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-05T07:28:50.028Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "6602370887c1ef000f268f7a"
+  },
+  "phone": "0354927404",
+  "password": "$2a$10$9Itw2Wqqg3YH7nSzmrKOZ.dl8lVcMap1xkCz91Zxwgg2/ipADS6mS",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-03-26T02:46:32.554Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-05T05:50:04.910Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660238ca87c1ef000f268f7e"
+  },
+  "phone": "0354927403",
+  "password": "$2a$10$bqFgTG7YzVeconngDois.Ob8TUHRs2m9riPWjDwEfu28yBAJdjife",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-03-26T02:54:02.302Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-05T06:33:28.769Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "6602767d2b22b44458aff13b"
+  },
+  "phone": "0354927405",
+  "password": "$2a$10$L1TNwrmkzb0aQBqaq2w5ceg6Y8l7x721GoF0.gBFitX6uNSkumoBG",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-03-26T07:17:17.541Z"
+  },
+  "updated_at": {
+    "$date": "2024-03-26T07:17:17.541Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660278462b22b44458aff140"
+  },
+  "phone": "0354927409",
+  "password": "$2a$10$4/Hjv/bZkCDgPK584sCyRu2zMPRWMYFwIwn6SsX09e/jb5xIUXdvS",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-03-26T07:24:54.277Z"
+  },
+  "updated_at": {
+    "$date": "2024-03-31T17:05:45.585Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660665c3ead8567bd8e4ccac"
+  },
+  "phone": "0354927406",
+  "password": "$2a$10$Jxb.JWRqZfxi/xz3dd9pY.qngARWn9Fe0LEs.2gi6Gqco.qHK5R/G",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-03-29T06:54:59.028Z"
+  },
+  "updated_at": {
+    "$date": "2024-03-29T06:56:01.940Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660ba991942f2f4a63737be1"
+  },
+  "phone": "0354927502",
+  "password": "$2a$10$uAMPOYKNPsnEEjrmcXC5d.m7Wx06dojixlqwdY/hREV.WmdqZwrBW",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-02T06:45:36.990Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-02T06:49:57.457Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d3eda4374535d61515619"
+  },
+  "phone": "0929635572",
+  "password": "$2a$10$1RGg8qLKDgHoC02dvRXE0eW6/wviUMeob.pz8LMPYMzV678HzP09O",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T11:34:50.855Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T13:40:19.583Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d5cdf306ae07b721bdd76"
+  },
+  "phone": "0929635571",
+  "password": "$2a$10$jwaB3OkO/BKvTQwc2T6ySOwOFXr2CEZepQfU9rOT2S2jhZQuzYLNG",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T13:42:55.261Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T13:43:15.449Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d5e4f306ae07b721bdd79"
+  },
+  "phone": "0929535570",
+  "password": "$2a$10$R4Sudq227AXT7TSZkE8d6.3ZMncdlVFRyWNmuwNrRvOh9eSHvYCAK",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T13:49:03.894Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T13:49:18.711Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d5ef1306ae07b721bdd7c"
+  },
+  "phone": "0929635577",
+  "password": "$2a$10$UA9bFTZ.1J.bIRHom72Fl.rDzsWrvm804OfXJogaUU4XcEJZ7GeS2",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T13:51:45.744Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T13:53:13.391Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d61fe306ae07b721bdd80"
+  },
+  "phone": "0388324315",
+  "password": "$2a$10$K1TZewddHxjJj2OJkBF79u0mBNmYYasEhA8tSNp9bR2p7bCRZXpGG",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T14:04:46.234Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:05:26.749Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d6332306ae07b721bdd83"
+  },
+  "phone": "0929635550",
+  "password": "$2a$10$jnqZsoq4tZIVAmyzWp/V8ego64tFaXayi0D7lZhj5jNRDzrKqW3pC",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T14:09:54.533Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:10:08.980Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d63c2306ae07b721bdd86"
+  },
+  "phone": "0353660177",
+  "password": "$2a$10$4n.txTdXuo1saiGjw4bveuKnx1gmKWlIoWYxzlizG6rtKsiR2p6.m",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T14:12:18.944Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:12:35.724Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d64f3306ae07b721bdd89"
+  },
+  "phone": "0562974304",
+  "password": "$2a$10$r8Vwt4u2zcwfQ9OsaHdGH.698ONlH5LQZouh/ERLvQmlhwNmDvQyu",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T14:17:23.669Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:17:40.116Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d657b306ae07b721bdd8c"
+  },
+  "phone": "0929635579",
+  "password": "$2a$10$KX9BKdBx2Qz..g2gy.WqKu4CWdhJ4zHNkR2K/oIbDkTQEvQuXo7GC",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T14:19:39.860Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:19:56.681Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d6630306ae07b721bdd8f"
+  },
+  "phone": "0562222222",
+  "password": "$2a$10$iF1YS0il1z6WJzLMgMMxleA2p2XUloha4NOlrMLDHIMo6kf5RDy3K",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T14:22:40.132Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:22:57.810Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d66f7306ae07b721bdd92"
+  },
+  "phone": "0562974301",
+  "password": "$2a$10$IRirs3cF.aigQUjIGtM3ZOUNQnNKEezJ6umDdQy3KBSo5.DOYFrT2",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T14:25:59.936Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:26:15.258Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660d6768306ae07b721bdd95"
+  },
+  "phone": "0929635575",
+  "password": "$2a$10$bfQY8jogTJo49iLZebbxJukHGI78ods.aK5z2IiJ2Empb54mkCK4y",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T14:27:52.824Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:28:07.171Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660da545bd9bf778c59c38de"
+  },
+  "phone": "0929623332",
+  "password": "0929623332",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T18:51:49.314Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T18:51:49.314Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660dab9cbd9bf778c59c38e0"
+  },
+  "phone": "0929123132",
+  "password": "0929123132",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-03T19:18:52.544Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T19:18:52.544Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e33919d8ef4617d0ed9c7"
+  },
+  "phone": "0929535574",
+  "password": "0929535574",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T04:58:57.369Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T04:58:57.369Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e36609d8ef4617d0ed9c9"
+  },
+  "phone": "0923233322",
+  "password": "0923233322",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:10:56.862Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:10:56.862Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e36a09d8ef4617d0ed9cb"
+  },
+  "phone": "0929232132",
+  "password": "0929232132",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:12:00.582Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:12:00.582Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e36e39d8ef4617d0ed9cd"
+  },
+  "phone": "0923232323",
+  "password": "0923232323",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:13:07.383Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:13:07.383Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e37bf9d8ef4617d0ed9cf"
+  },
+  "phone": "0929213123",
+  "password": "0929213123",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:16:47.230Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:16:47.230Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e38e59d8ef4617d0ed9d1"
+  },
+  "phone": "0929231312",
+  "password": "0929231312",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:21:41.334Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:21:41.334Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e392c9d8ef4617d0ed9d3"
+  },
+  "phone": "0923231131",
+  "password": "0923231131",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:22:52.439Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:22:52.439Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e39749d8ef4617d0ed9d5"
+  },
+  "phone": "0929323232",
+  "password": "0929323232",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:24:04.432Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:24:04.432Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e3e819d8ef4617d0ed9d7"
+  },
+  "phone": "0921313231",
+  "password": "$2a$10$iu4jvPieSWXJI2UJ85KP2e5WJAFWfpMoZjUtyN/TICFyQ1tI/RCb2",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:45:37.142Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:45:57.920Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e3ed99d8ef4617d0ed9da"
+  },
+  "phone": "0929312313",
+  "password": "$2a$10$WYQwnirRm9ACUV/8aE1qOuy27xod4RVMKZ1dUqDMq1EdUHiAsBkQm",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:47:05.831Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:47:28.539Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e40cd9d8ef4617d0ed9dd"
+  },
+  "phone": "0925678933",
+  "password": "0925678933",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T05:55:25.292Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:55:25.292Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660e6f0d7abc9f0e1e13b862"
+  },
+  "phone": "0354062270",
+  "password": "$2a$10$K8HI61I42RwSCy9DGNpsHuzt4DBhqcC6c.hwglPQuxCgTXFnaOvoK",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T09:12:45.008Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-05T05:43:20.513Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660ea39591984030c7f24daf"
+  },
+  "phone": "0321456789",
+  "password": "0321456789",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T12:56:53.559Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T12:56:53.559Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660ea61491984030c7f24db1"
+  },
+  "phone": "0321645784",
+  "password": "0321645784",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T13:07:32.701Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T13:07:32.701Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660ea6e191984030c7f24db3"
+  },
+  "phone": "0321546780",
+  "password": "0321546780",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T13:10:57.670Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T13:10:57.670Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660ec94f91984030c7f24dbe"
+  },
+  "phone": "0361613087",
+  "password": "$2a$10$2CueVoFiuyA4bQE0XxXP8Okw2hd9PJp3QvD8qMjpZHP5/MSyAqsz2",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T15:37:51.577Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-05T07:17:45.144Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "660ece1b91984030c7f24dc0"
+  },
+  "phone": "0321645789",
+  "password": "$2a$10$Eg7WrOrHF3PnmEfVd5B5wu6S1QSugsz4MBeF.dVeorVD1dIq10Vtq",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-04T15:58:19.766Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T15:58:55.657Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "66144a1e750fbe613013e2ae"
+  },
+  "phone": "0528360187",
+  "password": "0528360187",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-08T19:48:46.433Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-08T19:48:46.433Z"
+  },
+  "status": "UNVERIFIED",
+  "_class": "vn.edu.iuh.models.User"
+},
+{
+  "_id": {
+    "$oid": "66153ff6e0e9c83619661756"
+  },
+  "phone": "0923032002",
+  "password": "$2a$10$M/RdSJjotOx2co.LThmRjOuc4hM/dTkLk8wf7mefEAA8lGDmSeMb2",
+  "role": "USER",
+  "created_at": {
+    "$date": "2024-04-09T13:17:42.878Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-11T10:14:40.209Z"
+  },
+  "status": "ACTIVE",
+  "_class": "vn.edu.iuh.models.User"
+}]

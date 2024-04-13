@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 const TabChat = () => {
   return (
     <Tab.Navigator
-      initialRouteName="TabContact"
+      initialRouteName="ListChat"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
       }}

@@ -15,6 +15,8 @@ import Register from "../screens/singUpScreen/Register";
 import ForgetPassword from "../screens/forgetPasswordScreen/forgetPassword";
 import ConfirmOTP from "../screens/forgetPasswordScreen/confirmOTP";
 import ResetPassword from "../screens/forgetPasswordScreen/ResetPassword";
+import ResultFindProfile from "../screens/findScreen/ResultFindProfile";
+import DetailProfile from "../screens/profileScreen/DetailProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +38,7 @@ const Route = () => {
       <Stack.Screen
         name="SignIn"
         component={SignInScreen}
-        options={{ title: ""}}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="Find"
@@ -71,34 +73,47 @@ const Route = () => {
       <Stack.Screen
         name="RegisterForm"
         component={RegisterForm}
-        options={{ title: ""}}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="Authentication"
         component={Authentication}
-        options={{ title: "Xác thực OTP"}}
+        options={{ title: "Xác thực OTP" }}
       />
       <Stack.Screen
         name="Register"
         component={Register}
-        options={{ title: ""}}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="ForgetPassword"
         component={ForgetPassword}
-        options={{ title: "Quên mật khẩu"}}
+        options={{ title: "Quên mật khẩu" }}
       />
       <Stack.Screen
         name="ConfirmOTP"
         component={ConfirmOTP}
-        options={{ title: ""}}
-
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="ResetPassword"
         component={ResetPassword}
-        options={{ title: ""}}
-
+        options={{ title: "" }}
+      />
+      <Stack.Screen
+        name="FindScreen"
+        component={FindScreen}
+        options={{ headerShown: false}}
+      />
+      <Stack.Screen
+        name="ResultFindProfile"
+        component={ResultFindProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DetailProfile"
+        component={DetailProfile}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

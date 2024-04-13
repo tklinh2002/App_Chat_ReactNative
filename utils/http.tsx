@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-const ip = "192.168.101.5:8080"
+export const ip = "192.168.137.74"
 class Http {
   private static instance: AxiosInstance;
   
@@ -7,8 +7,8 @@ class Http {
     
     if (!Http.instance) {
       Http.instance = axios.create({
-        baseURL: `http://${ip}/api`, // change ip address to your local ip address ipconfig
-        timeout: 10000,
+        baseURL: `http://${ip}:8080/api`, // change ip address to your local ip address ipconfig
+        timeout: 20000,
         headers: {
           "Content-Type": "application/json",
         },

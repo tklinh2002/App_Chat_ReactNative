@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, ScrollView, FlatList, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, ScrollView, FlatList } from 'react-native';
+import axios from 'axios';
+import { Avatar } from 'react-native-elements';
+import ArrowIcon from '../../assets/icon/ArrowIcon';
+import { useQueryClient } from '@tanstack/react-query';
 
-const FindScreen = () => {
+const FindScreen = ({ navigation, route }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchHistory, setSearchHistory] = useState([]);
-
+  const [data, setData] = useState(null) as any;
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const defaultAvatar = require('../../assets/profileTest/defaultAVT.jpg');
+  const [thumbnailAvatar, setThumbnailAvatar] = useState('');
+  const queryClient = useQueryClient();
+  const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
   const handleSearch = () => {
-    if (searchKeyword.trim() !== '') {
-      setSearchHistory([...searchHistory, searchKeyword]);
-      setSearchKeyword('');
+    if (phoneNumber.trim() !== '') {
+      setSearchHistory([...searchHistory, phoneNumber]);
+      getUserProfile(phoneNumber);
     }
   };
 
@@ -16,6 +25,24 @@ const FindScreen = () => {
     setSearchHistory([]);
   };
 
+  const getUserProfile = async (phoneNumber) => {
+    try {
+      await axios.get(`http://172.20.10.3:8080/api/v1/users/profile/${phoneNumber}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      
+      }).then((res) => {
+        const data = res.data;
+        console.log('Thông tin người dùng:', data);
+        setData(data);
+      }).catch((error) => {
+        console.log(error)
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
   return (
     <ScrollView style={styles.container}>
       {/* Navbar */}
@@ -27,16 +54,19 @@ const FindScreen = () => {
           />
         </TouchableOpacity>
         <View style={styles.findnav}>
-          <Image
-            source={require('../../assets/icon/dsearch.png')}
-            style={styles.searchIcon}
-          />
+          <TouchableOpacity onPress={handleSearch}>
+            <Image
+              source={require('../../assets/icon/dsearch.png')}
+              style={styles.searchIcon}
+            />
+          </TouchableOpacity>
+
           <TextInput
             placeholder='Tìm kiếm'
             style={styles.inputText}
-            value={searchKeyword}
-            onChangeText={(text) => setSearchKeyword(text)}
-            onSubmitEditing={handleSearch}
+            value={phoneNumber}
+            onChangeText={(text) => setPhoneNumber(text)}
+            keyboardType='numeric'
           />
         </View>
         <TouchableOpacity>
@@ -46,7 +76,43 @@ const FindScreen = () => {
           />
         </TouchableOpacity>
       </View>
+      <View>
+        {/* navigation.navigate('DetailProfile', { data: data }) */}
+        {data && (
+          <View style={styles.userDataContainer}>
+            <View style={{
+              right: 10,
+              top: 20,
+              position: 'absolute',
+              zIndex: 1,
+            }}>
+              <TouchableOpacity onPress={() => setData(null)}>
+                <Image
+                  source={require('../../assets/icon/close.png')}
+                  style={{width: 20, height: 20}}
+                />
+              </TouchableOpacity >
+            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('ResultFindProfile', { data: data, phoneNumber: phoneNumber })}>
+              <View style={{ flexDirection: 'row' }}>
+                <Avatar
+                  size={100}
+                  rounded={true}
+                  source={thumbnailAvatar ? { uri: thumbnailAvatar } : defaultAvatar}
+                />
+                <View>
+                  <Text style={styles.userDataText}>{data?.firstName} {data.lastName}</Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ color: '#7f7f7f', marginLeft: 10 }}>Số điện thoại: </Text>
+                    <Text style={{ color: '#00aeef' }}>{phoneNumber}</Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
 
+      </View>
       {/* Mini Apps bạn có thể tìm */}
       <View style={styles.minibar}>
         <Text style={{ fontSize: 13, fontWeight: 'bold', marginLeft: 20 }}>Mini Apps bạn có thể tìm</Text>
@@ -62,7 +128,7 @@ const FindScreen = () => {
         <View style={styles.itembar}>
           <TouchableOpacity>
             <Image style={styles.item} source={require('../../assets/icon/zmelody.jpg')} />
-            <Text style={styles.input}>Nhạc chờ {"\n"}Zmelody</Text>
+            <Text style={styles.input}>Zmelody</Text>
           </TouchableOpacity>
         </View>
 
@@ -96,20 +162,22 @@ const FindScreen = () => {
               data={searchHistory}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
-                <TouchableOpacity style={{flexDirection:'row'}} onPress={() => console.log(item)}>
+                <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => getUserProfile(item)}>
                   <Text style={styles.historyItem}>{item}</Text>
                 </TouchableOpacity>
               )}
             />
           </View>
         )}
-        <TouchableOpacity style={{ flexDirection: 'row',marginTop:10  }} onPress={clearSearchHistory}>
-          <Text style={{ color: '#4fabf4', marginLeft: 20, textAlign: 'center',}}>Chỉnh sửa lịch sử tìm kiếm</Text>
+        <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }} onPress={clearSearchHistory}>
+          <Text style={{ color: '#4fabf4', marginLeft: 20, textAlign: 'center', }}>Xóa lịch sử tìm kiếm</Text>
           <Image source={require('../../assets/icon/next_move.png')} />
         </TouchableOpacity>
-
-       
       </View>
+
+      {/* Hiển thị thông tin người dùng */}
+
+
     </ScrollView>
   );
 };
@@ -118,15 +186,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    
+    paddingTop:"10%"
   },
   navbar: {
     height: 50,
     backgroundColor: '#009bf8',
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 40,
-  
   },
   findnav: {
     backgroundColor: '#fff',
@@ -188,6 +254,18 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 14,
     color: '#333',
+  },
+  userDataContainer: {
+
+    padding: 10,
+
+    flexDirection: 'row'
+  },
+  userDataText: {
+    fontSize: 20,
+    left: 10,
+    marginTop: 20,
+    fontWeight: 'bold'
   },
 });
 

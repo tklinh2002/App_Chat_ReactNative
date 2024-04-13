@@ -3,14 +3,19 @@ import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
 import { backgroundHeader } from "../../assets/colors";
+import { useQueryClient } from "@tanstack/react-query";
+
 const Header = () => {
+  const queryClient = useQueryClient()
   const navigation = useNavigation();
-  const handLogOut = () => {
+  const handLogOut = async () => {
+    await queryClient.clear()
     navigation.reset({
       index: 0,
       routes: [{ name: 'Home' as never }],
     });
-
+    
+    
   }
   return (
     <View style={styles.header}>

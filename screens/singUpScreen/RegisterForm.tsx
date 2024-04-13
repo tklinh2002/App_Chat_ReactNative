@@ -284,7 +284,7 @@ const RegisterForm = ({ navigation }) => {
             </Text>
             <View style={styles.separator} />
             <Text>• Mã đã được gửi, kiểm tra điện thoại của bạn</Text>
-            <Text>• OTP chỉ có hiệu lực trong vòng 30s</Text>
+            <Text>• OTP chỉ có hiệu lực trong vòng 3 phút</Text>
             <TouchableOpacity
               onPress={() => {
                 handleCloseModal();

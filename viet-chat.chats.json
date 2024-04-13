@@ -1,0 +1,1146 @@
+[{
+  "_id": {
+    "$oid": "660a9faec04d0532fa8d34ab"
+  },
+  "messages": [
+    {
+      "message_id": {
+        "$oid": "660a9faec04d0532fa8d34aa"
+      },
+      "type": "EVENT",
+      "content": "Hai bạn đã trở thành bạn bè",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-01T11:51:10.300Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-02T03:21:36.928Z"
+      },
+      "delete_by": [
+        {
+          "$oid": "6602209387c1ef000f268f77"
+        }
+      ]
+    },
+    {
+      "message_id": {
+        "$oid": "660b79c07911af6e799f5c02"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-02T03:21:36.890Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-02T03:21:36.890Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "660ba03cb3d20f0628fb442c"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-02T06:05:48.921Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-02T06:05:48.921Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "660ba0fab3d20f0628fb442d"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-02T06:08:58.181Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-02T06:08:58.181Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "660ba126b3d20f0628fb442e"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-02T06:09:42.173Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-02T06:09:42.173Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "660bacc59f2a654adab1c2d2"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello, I'm a message!",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-02T06:59:17.814Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-02T06:59:17.814Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6612d29781ff5c4a97a0b9b1"
+      },
+      "reply_message_id": {
+        "$oid": "660bacc59f2a654adab1c2d2"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hi",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-07T17:06:31.390Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-07T17:06:31.390Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6613608ad87cca0efca82446"
+      },
+      "reply_message_id": {
+        "$oid": "660bacc59f2a654adab1c2d2"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hi",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-08T03:12:10.168Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-08T03:12:10.168Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66136a81a34842666e009f45"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "I love you",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-08T03:54:41.592Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-08T03:54:41.592Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66136be5a34842666e009f46"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "OK a",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-08T04:00:37.817Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-08T04:00:37.817Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66136c0ba34842666e009f47"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "ờ",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-08T04:01:15.713Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-08T04:01:15.713Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6613732ba34842666e009f48"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "ờ",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-08T04:31:39.619Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-08T04:31:39.619Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66137346a34842666e009f49"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Ok bro",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-08T04:32:06.965Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-08T04:32:06.965Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66137523a34842666e009f4b"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602390f87c1ef000f268f80"
+      },
+      "content": "Tin nhắn đã bị thu hồi",
+      "status": "UNSEND",
+      "created_at": {
+        "$date": "2024-04-08T04:40:03.543Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-08T04:40:03.543Z"
+      },
+      "delete_by": [
+        {
+          "$oid": "6602390f87c1ef000f268f80"
+        }
+      ]
+    },
+    {
+      "message_id": {
+        "$oid": "66137626a34842666e009f4e"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602390f87c1ef000f268f80"
+      },
+      "content": "Tin nhắn đã bị thu hồi",
+      "status": "UNSEND",
+      "created_at": {
+        "$date": "2024-04-08T04:44:22.027Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-08T04:44:22.027Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66150b0b2d30a214aab16839"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Tin nhắn đã bị thu hồi",
+      "status": "UNSEND",
+      "created_at": {
+        "$date": "2024-04-09T09:31:55.648Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-09T09:31:55.648Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66151e532d30a214aab16845"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "attachments": [
+        {
+          "type": "IMAGE",
+          "url": "https://viet-chat-avatars.s3.ap-southeast-1.amazonaws.com/chats/65fbc98ddcf6c00d7a76ac6f/among-us.png",
+          "filename": "among-us.png"
+        }
+      ],
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-09T10:54:11.194Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-09T10:54:11.194Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66151e702d30a214aab16846"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "attachments": [
+        {
+          "type": "IMAGE",
+          "url": "https://viet-chat-avatars.s3.ap-southeast-1.amazonaws.com/chats/65fbc98ddcf6c00d7a76ac6f/among-us.png",
+          "filename": "among-us.png"
+        }
+      ],
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-09T10:54:40.585Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-09T10:54:40.585Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "661521052d30a214aab16847"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "attachments": [
+        {
+          "type": "IMAGE",
+          "url": "https://viet-chat-avatars.s3.ap-southeast-1.amazonaws.com/chats/65fbc98ddcf6c00d7a76ac6f/among-us.png",
+          "filename": "among-us.png"
+        }
+      ],
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-09T11:05:41.005Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-09T11:05:41.005Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6615239e2d30a214aab16848"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "attachments": [
+        {
+          "type": "IMAGE",
+          "url": "https://viet-chat-avatars.s3.ap-southeast-1.amazonaws.com/chats/65fbc98ddcf6c00d7a76ac6f/among-us.png",
+          "filename": "among-us.png"
+        }
+      ],
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-09T11:16:46.080Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-09T11:16:46.080Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "661529d72d30a214aab1684b"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Tin nhắn đã bị thu hồi",
+      "status": "UNSEND",
+      "created_at": {
+        "$date": "2024-04-09T11:43:19.522Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-09T11:43:19.522Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66166982c7f4d10c8793dbe5"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T10:27:14.946Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T10:27:14.946Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "661669a2c7f4d10c8793dbe6"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T10:27:46.449Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T10:27:46.449Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66166a0fc7f4d10c8793dbe7"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T10:29:35.735Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T10:29:35.735Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66166d42c7f4d10c8793dbec"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Abc",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T10:43:14.077Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T10:43:14.077Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66166ecdc7f4d10c8793dbee"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T10:49:49.965Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T10:49:49.965Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66166fcec7f4d10c8793dbf0"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T10:54:06.058Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T10:54:06.058Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66166fdac7f4d10c8793dbf1"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "12345",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T10:54:18.356Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T10:54:18.356Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66167197c7f4d10c8793dbf4"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Alo mạnh",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:01:43.157Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:01:43.157Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "661671f6c7f4d10c8793dbf6"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "456789",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:03:18.522Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:03:18.522Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66167205c7f4d10c8793dbf7"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "0961613087",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:03:33.696Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:03:33.696Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66167306c7f4d10c8793dbf9"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Test final",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:07:50.684Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:07:50.684Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "661678bcc7f4d10c8793dbfd"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Abc",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:32:12.108Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:32:12.108Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "661678f5c7f4d10c8793dbfe"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Linh 123",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:33:09.408Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:33:09.408Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66167a54c7f4d10c8793dc01"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello abc",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:39:00.667Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:39:00.667Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66167afdc7f4d10c8793dc03"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Linh456",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:41:49.798Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:41:49.798Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66167b34c7f4d10c8793dc04"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "1234567",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:42:44.455Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:42:44.455Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66167bdac7f4d10c8793dc05"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:45:30.983Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:45:30.983Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66167d0ec7f4d10c8793dc08"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "1",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T11:50:38.800Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T11:50:38.800Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66169f2508350000f2537dfc"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "1h",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T14:16:05.480Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T14:16:05.480Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66169f3908350000f2537dfd"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Abc",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T14:16:25.623Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T14:16:25.623Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66169ff808350000f2537dfe"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Xzy",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T14:19:36.572Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T14:19:36.572Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6616a2a308350000f2537e04"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "1234",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T14:30:59.956Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T14:30:59.956Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6616a2b308350000f2537e05"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "45678",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T14:31:15.453Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T14:31:15.453Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6616ac6e923660769d5aeece"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Lần đầu test seen",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T15:12:46.836Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T15:12:46.836Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6616ac92923660769d5aeecf"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Lần 2 test seen",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T15:13:22.934Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T15:13:22.934Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6617463f47ac0c69e933f602"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Alo ",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-11T02:09:03.082Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-11T02:09:03.082Z"
+      }
+    },
+    {
+      "message_id": {
+        "$oid": "6617468847ac0c69e933f603"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "H",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-11T02:10:16.574Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-11T02:10:16.574Z"
+      }
+    }
+  ],
+  "members": [
+    {
+      "$oid": "6602390f87c1ef000f268f80"
+    },
+    {
+      "$oid": "6602209387c1ef000f268f77"
+    }
+  ],
+  "last_message": {
+    "message_id": "6617468847ac0c69e933f603",
+    "content": "H",
+    "sender_id": {
+      "$oid": "6602209387c1ef000f268f77"
+    },
+    "created_at": {
+      "$date": "2024-04-11T02:10:16.574Z"
+    }
+  },
+  "created_at": {
+    "$date": "2024-04-01T11:51:10.303Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-11T02:10:16.575Z"
+  },
+  "_class": "vn.edu.iuh.models.Chat"
+},
+{
+  "_id": {
+    "$oid": "660ab974f65446249dcc8e83"
+  },
+  "messages": [
+    {
+      "message_id": {
+        "$oid": "660ab974f65446249dcc8e82"
+      },
+      "type": "EVENT",
+      "content": "Hai bạn đã trở thành bạn bè",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-01T13:41:08.035Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-03T02:18:11.875Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "660cbc63998fbd44cf89a34f"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Hello",
+      "attachments": [
+        {
+          "type": "IMAGE",
+          "url": "https://viet-chat-avatars.s3.ap-southeast-1.amazonaws.com/chats/65fbc98ddcf6c00d7a76ac6f/among-us.png",
+          "filename": "among-us.png"
+        }
+      ],
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-03T02:18:11.721Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-03T02:18:11.721Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6616ad68923660769d5aeed0"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602374687c1ef000f268f7b"
+      },
+      "content": "test seen",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T15:16:56.874Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T15:16:56.874Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6616af02558cbf1d3c64f35e"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602374687c1ef000f268f7b"
+      },
+      "content": "da xem",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T15:23:46.141Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T15:23:46.141Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66182094ecc3b44789f7273e"
+      },
+      "type": "EVENT",
+      "content": "Hai bạn đã trở thành bạn bè",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-11T17:40:36.701Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-11T17:40:36.701Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "66182223ecc3b44789f72740"
+      },
+      "type": "EVENT",
+      "content": "Hai bạn đã trở thành bạn bè",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-11T17:47:15.313Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-11T17:47:15.313Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6618232c82666669b6ba7d9d"
+      },
+      "type": "EVENT",
+      "content": "Hai bạn đã trở thành bạn bè",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-11T17:51:40.827Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-11T17:51:40.827Z"
+      },
+      "delete_by": []
+    }
+  ],
+  "members": [
+    {
+      "$oid": "6602374687c1ef000f268f7b"
+    },
+    {
+      "$oid": "6602209387c1ef000f268f77"
+    }
+  ],
+  "last_message": {
+    "message_id": "6618232c82666669b6ba7d9d",
+    "content": "Hai bạn đã trở thành bạn bè",
+    "created_at": {
+      "$date": "2024-04-11T17:51:50.722Z"
+    }
+  },
+  "created_at": {
+    "$date": "2024-04-01T13:41:08.036Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-11T17:51:50.730Z"
+  },
+  "_class": "vn.edu.iuh.models.Chat"
+},
+{
+  "_id": {
+    "$oid": "660cb14ad1e1b2633f2e3ace"
+  },
+  "group_id": {
+    "$oid": "660cad601c85ab248367fadb"
+  },
+  "messages": [
+    {
+      "message_id": {
+        "$oid": "661587909f4c61274db81aa1"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "content": "Lần đầu test tool",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-09T18:23:12.202Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-09T18:23:12.202Z"
+      },
+      "delete_by": []
+    },
+    {
+      "message_id": {
+        "$oid": "6616b165d4f9a0767bc5464a"
+      },
+      "type": "MESSAGE",
+      "sender_id": {
+        "$oid": "6602374687c1ef000f268f7b"
+      },
+      "content": "Demo thôi",
+      "status": "SENT",
+      "created_at": {
+        "$date": "2024-04-10T15:33:57.120Z"
+      },
+      "updated_at": {
+        "$date": "2024-04-10T15:33:57.120Z"
+      }
+    }
+  ],
+  "members": [],
+  "last_message": {
+    "message_id": "6616b165d4f9a0767bc5464a",
+    "content": "Demo thôi",
+    "sender_id": {
+      "$oid": "6602374687c1ef000f268f7b"
+    },
+    "created_at": {
+      "$date": "2024-04-10T15:33:57.120Z"
+    }
+  },
+  "created_at": {
+    "$date": "2024-04-03T01:14:10.682Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-10T15:34:10.101Z"
+  },
+  "_class": "vn.edu.iuh.models.Chat"
+}]

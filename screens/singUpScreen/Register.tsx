@@ -275,7 +275,7 @@ const Register = ({ navigation, route }) => {
               Đăng ký thành công
             </Text>
             <View style={styles.separator} />
-            <Text>• Bây giờ bạn có thể đăng nhập và sử dụng dịch vụ Zalo</Text>
+            <Text>• Bây giờ bạn có thể đăng nhập và sử dụng dịch vụ</Text>
             <Text>• Chúc bạn sử dụng dịch vụ vui vẻ</Text>
             <TouchableOpacity
               onPress={() => {

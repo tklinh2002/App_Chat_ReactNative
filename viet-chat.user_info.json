@@ -1,0 +1,827 @@
+[{
+  "_id": {
+    "$oid": "6602209387c1ef000f268f77"
+  },
+  "first_name": "Nguyễn Minh",
+  "last_name": "Quân",
+  "thumbnail_avatar": "https://viet-chat-avatars.s3.ap-southeast-1.amazonaws.com/avatars/65dcd570e36d2418dacb1b62.png",
+  "gender": true,
+  "birthday": {
+    "$date": "2002-10-09T17:00:00.000Z"
+  },
+  "groups": [
+    {
+      "$oid": "660cad601c85ab248367fadb"
+    }
+  ],
+  "friends": [
+    {
+      "friend_id": {
+        "$oid": "6602390f87c1ef000f268f80"
+      },
+      "display_name": "Hùng Mạnh",
+      "status": "FRIEND",
+      "chat_id": {
+        "$oid": "660a9faec04d0532fa8d34ab"
+      },
+      "is_best_friend": false
+    },
+    {
+      "friend_id": {
+        "$oid": "6602374687c1ef000f268f7b"
+      },
+      "display_name": "Bùi Mạnh",
+      "status": "FRIEND",
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "is_best_friend": false
+    },
+    {
+      "friend_id": {
+        "$oid": "66066602ead8567bd8e4ccae"
+      },
+      "display_name": "Quân AB",
+      "status": "BLOCKED",
+      "chat_id": null,
+      "is_best_friend": false
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-26T01:10:43.641Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-11T17:51:50.925Z"
+  },
+  "user_id": {
+    "$oid": "6602137187c1ef000f268f63"
+  },
+  "chats": [
+    {
+      "chat_id": {
+        "$oid": "660a9faec04d0532fa8d34ab"
+      },
+      "last_seen_message_id": "6617468847ac0c69e933f603",
+      "join_time": {
+        "$date": "2024-04-01T11:51:10.338Z"
+      }
+    },
+    {
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "last_seen_message_id": "6616af02558cbf1d3c64f35e",
+      "join_time": {
+        "$date": "2024-04-01T13:41:08.074Z"
+      }
+    },
+    {
+      "chat_id": {
+        "$oid": "660cb14ad1e1b2633f2e3ace"
+      },
+      "last_seen_message_id": "6616b165d4f9a0767bc5464a"
+    },
+    {
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "join_time": {
+        "$date": "2024-04-11T17:40:50.170Z"
+      }
+    },
+    {
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "join_time": {
+        "$date": "2024-04-11T17:47:16.185Z"
+      }
+    },
+    {
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "join_time": {
+        "$date": "2024-04-11T17:51:50.923Z"
+      }
+    }
+  ],
+  "recent_searches": [
+    {
+      "$oid": "6602374687c1ef000f268f7b"
+    },
+    {
+      "$oid": "6602390f87c1ef000f268f80"
+    }
+  ],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "6602374687c1ef000f268f7b"
+  },
+  "first_name": "Bùi",
+  "last_name": "Mạnh",
+  "thumbnail_avatar": "https://viet-chat-avatars.s3.ap-southeast-1.amazonaws.com/avatars/65dcd570e36d2418dacb1b62.png",
+  "gender": true,
+  "birthday": {
+    "$date": "2002-10-09T17:00:00.000Z"
+  },
+  "groups": [
+    {
+      "$oid": "660cad601c85ab248367fadb"
+    }
+  ],
+  "friends": [
+    {
+      "friend_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "display_name": "Nguyễn Minh Quân",
+      "status": "FRIEND",
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "is_best_friend": false
+    },
+    {
+      "friend_id": {
+        "$oid": "66066602ead8567bd8e4ccae"
+      },
+      "display_name": "Quân AB",
+      "status": "BLOCK",
+      "chat_id": null,
+      "is_best_friend": false
+    },
+    {
+      "friend_id": {
+        "$oid": "660281012b22b44458aff159"
+      },
+      "display_name": "Quân AB",
+      "status": "FRIEND_REQUEST",
+      "chat_id": null,
+      "is_best_friend": false
+    },
+    {
+      "friend_id": {
+        "$oid": "6602390f87c1ef000f268f80"
+      },
+      "display_name": "Hùng Mạnh",
+      "status": "FRIEND_REQUEST",
+      "chat_id": null,
+      "is_best_friend": false
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-26T02:47:34.049Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-11T17:51:53.284Z"
+  },
+  "user_id": {
+    "$oid": "6602370887c1ef000f268f7a"
+  },
+  "chats": [
+    {
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "last_seen_message_id": "6616af02558cbf1d3c64f35e",
+      "join_time": {
+        "$date": "2024-04-01T13:41:08.074Z"
+      }
+    },
+    {
+      "chat_id": {
+        "$oid": "660cb14ad1e1b2633f2e3ace"
+      },
+      "last_seen_message_id": "6616b165d4f9a0767bc5464a",
+      "join_time": {
+        "$date": "2024-04-01T13:41:08.074Z"
+      }
+    },
+    {
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "join_time": {
+        "$date": "2024-04-11T17:40:50.170Z"
+      }
+    },
+    {
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "join_time": {
+        "$date": "2024-04-11T17:47:16.185Z"
+      }
+    },
+    {
+      "chat_id": {
+        "$oid": "660ab974f65446249dcc8e83"
+      },
+      "join_time": {
+        "$date": "2024-04-11T17:51:50.923Z"
+      }
+    }
+  ],
+  "recent_searches": [
+    {
+      "$oid": "6602209387c1ef000f268f77"
+    },
+    {
+      "$oid": "66066602ead8567bd8e4ccae"
+    },
+    {
+      "$oid": "6602390f87c1ef000f268f80"
+    }
+  ],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "6602390f87c1ef000f268f80"
+  },
+  "first_name": "Hùng",
+  "last_name": "Mạnh",
+  "gender": true,
+  "birthday": {
+    "$date": "2002-10-09T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [
+    {
+      "friend_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "display_name": "Nguyễn Minh Quân",
+      "status": "FRIEND",
+      "chat_id": {
+        "$oid": "660a9faec04d0532fa8d34ab"
+      },
+      "is_best_friend": false
+    },
+    {
+      "friend_id": {
+        "$oid": "6602374687c1ef000f268f7b"
+      },
+      "display_name": "Bùi Mạnh",
+      "status": "PENDING",
+      "is_best_friend": false
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-26T02:55:11.602Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-02T07:10:05.122Z"
+  },
+  "user_id": {
+    "$oid": "660238ca87c1ef000f268f7e"
+  },
+  "chats": [
+    {
+      "chat_id": {
+        "$oid": "660a9faec04d0532fa8d34ab"
+      },
+      "join_time": {
+        "$date": "2024-04-01T11:51:10.338Z"
+      }
+    }
+  ],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660281012b22b44458aff159"
+  },
+  "first_name": "Quân",
+  "last_name": "AB",
+  "gender": true,
+  "birthday": {
+    "$date": "2002-10-09T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [
+    {
+      "friend_id": {
+        "$oid": "6602374687c1ef000f268f7b"
+      },
+      "display_name": "Bùi Mạnh",
+      "status": "PENDING",
+      "is_best_friend": false
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-26T08:02:09.053Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-01T17:46:43.163Z"
+  },
+  "user_id": {
+    "$oid": "660278462b22b44458aff140"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "66066602ead8567bd8e4ccae"
+  },
+  "first_name": "Quân",
+  "last_name": "AB",
+  "gender": true,
+  "birthday": {
+    "$date": "2002-10-09T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [
+    {
+      "friend_id": {
+        "$oid": "6602374687c1ef000f268f7b"
+      },
+      "display_name": "Bùi Mạnh",
+      "status": "BLOCKED",
+      "chat_id": null,
+      "is_best_friend": false
+    },
+    {
+      "friend_id": {
+        "$oid": "6602209387c1ef000f268f77"
+      },
+      "display_name": "Nguyễn Minh Quân",
+      "status": "BLOCK",
+      "chat_id": null,
+      "is_best_friend": false
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-29T06:56:02.003Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T03:46:49.538Z"
+  },
+  "user_id": {
+    "$oid": "660665c3ead8567bd8e4ccac"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660baa95942f2f4a63737be3"
+  },
+  "first_name": "Khai",
+  "last_name": "Khua",
+  "gender": true,
+  "birthday": {
+    "$date": "2023-04-01T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-02T06:49:57.657Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-02T06:49:57.657Z"
+  },
+  "user_id": {
+    "$oid": "660ba991942f2f4a63737be1"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d5c43306ae07b721bdd75"
+  },
+  "first_name": "Huy",
+  "last_name": "Hùng",
+  "gender": false,
+  "birthday": {
+    "$date": "2001-12-31T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T13:40:19.657Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-11T18:28:50.416Z"
+  },
+  "user_id": {
+    "$oid": "660d3eda4374535d61515619"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d5cf3306ae07b721bdd78"
+  },
+  "first_name": "Khai",
+  "last_name": "Khung",
+  "gender": false,
+  "birthday": {
+    "$date": "2017-12-03T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T13:43:15.486Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T13:43:15.486Z"
+  },
+  "user_id": {
+    "$oid": "660d5cdf306ae07b721bdd76"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo",
+  "thumbnail_avatar": "https://khaingu.s3.ap-southeast-1.amazonaws.com/avatar/11042024163116.jpg"
+},
+{
+  "_id": {
+    "$oid": "660d5e5e306ae07b721bdd7b"
+  },
+  "first_name": "Test",
+  "last_name": "Test",
+  "gender": true,
+  "birthday": {
+    "$date": "2022-04-12T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T13:49:18.749Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T13:49:18.749Z"
+  },
+  "user_id": {
+    "$oid": "660d5e4f306ae07b721bdd79"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d5f49306ae07b721bdd7f"
+  },
+  "first_name": "Hung",
+  "last_name": "Hao",
+  "gender": true,
+  "birthday": {
+    "$date": "2002-03-01T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T13:53:13.428Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T13:53:13.428Z"
+  },
+  "user_id": {
+    "$oid": "660d5ef1306ae07b721bdd7c"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d6226306ae07b721bdd82"
+  },
+  "first_name": "Phuong",
+  "last_name": "Nguyen",
+  "gender": true,
+  "birthday": {
+    "$date": "2002-02-10T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T14:05:26.787Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:05:26.787Z"
+  },
+  "user_id": {
+    "$oid": "660d61fe306ae07b721bdd80"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d6341306ae07b721bdd85"
+  },
+  "first_name": "Hung",
+  "last_name": "Tet",
+  "gender": true,
+  "birthday": {
+    "$date": "2024-03-31T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T14:10:09.013Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:10:09.013Z"
+  },
+  "user_id": {
+    "$oid": "660d6332306ae07b721bdd83"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d63d3306ae07b721bdd88"
+  },
+  "first_name": "Hung",
+  "last_name": "Tet",
+  "gender": true,
+  "birthday": {
+    "$date": "2006-03-31T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T14:12:35.757Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:12:35.757Z"
+  },
+  "user_id": {
+    "$oid": "660d63c2306ae07b721bdd86"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d6504306ae07b721bdd8b"
+  },
+  "first_name": "Hugn",
+  "last_name": "Test",
+  "gender": true,
+  "birthday": {
+    "$date": "2003-04-01T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T14:17:40.156Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:17:40.156Z"
+  },
+  "user_id": {
+    "$oid": "660d64f3306ae07b721bdd89"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d658c306ae07b721bdd8e"
+  },
+  "first_name": "Khai",
+  "last_name": "An Cut",
+  "gender": true,
+  "birthday": {
+    "$date": "2023-04-01T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T14:19:56.717Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:19:56.717Z"
+  },
+  "user_id": {
+    "$oid": "660d657b306ae07b721bdd8c"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo",
+  "thumbnail_avatar": "https://khaingu.s3.ap-southeast-1.amazonaws.com/avatar/11042024163116.jpg"
+},
+{
+  "_id": {
+    "$oid": "660d6641306ae07b721bdd91"
+  },
+  "first_name": "Thong",
+  "last_name": "Ngoo",
+  "gender": true,
+  "birthday": {
+    "$date": "2009-09-14T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T14:22:57.845Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:22:57.845Z"
+  },
+  "user_id": {
+    "$oid": "660d6630306ae07b721bdd8f"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d6707306ae07b721bdd94"
+  },
+  "first_name": "Hung",
+  "last_name": "Test",
+  "gender": true,
+  "birthday": {
+    "$date": "2004-04-04T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T14:26:15.290Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:26:15.290Z"
+  },
+  "user_id": {
+    "$oid": "660d66f7306ae07b721bdd92"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660d6777306ae07b721bdd97"
+  },
+  "first_name": "Hung",
+  "last_name": "Test",
+  "gender": true,
+  "birthday": {
+    "$date": "2004-03-31T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-03T14:28:07.230Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-03T14:28:07.230Z"
+  },
+  "user_id": {
+    "$oid": "660d6768306ae07b721bdd95"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660e3e959d8ef4617d0ed9d9"
+  },
+  "first_name": "Hung",
+  "last_name": "Huy",
+  "gender": true,
+  "birthday": {
+    "$date": "1998-02-03T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-04T05:45:57.986Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:45:57.986Z"
+  },
+  "user_id": {
+    "$oid": "660e3e819d8ef4617d0ed9d7"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660e3ef09d8ef4617d0ed9dc"
+  },
+  "first_name": "Hung",
+  "last_name": "Huy",
+  "gender": true,
+  "birthday": {
+    "$date": "2008-01-07T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-04T05:47:28.572Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T05:47:28.572Z"
+  },
+  "user_id": {
+    "$oid": "660e3ed99d8ef4617d0ed9da"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660ece3f91984030c7f24dc2"
+  },
+  "first_name": "Linh",
+  "last_name": "Tran",
+  "gender": true,
+  "birthday": {
+    "$date": "1999-04-03T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-04T15:58:55.708Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-04T15:58:55.708Z"
+  },
+  "user_id": {
+    "$oid": "660ece1b91984030c7f24dc0"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660f8f785b3b3f4ccd5faa53"
+  },
+  "first_name": "Khai",
+  "last_name": "Hung",
+  "gender": true,
+  "birthday": {
+    "$date": "2002-04-04T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-05T05:43:20.682Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-05T05:43:20.682Z"
+  },
+  "user_id": {
+    "$oid": "660e6f0d7abc9f0e1e13b862"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "660fa5995b3b3f4ccd5faa5e"
+  },
+  "first_name": "Linh",
+  "last_name": "Tran",
+  "gender": true,
+  "birthday": {
+    "$date": "2001-04-04T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-05T07:17:45.224Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-05T07:17:45.224Z"
+  },
+  "user_id": {
+    "$oid": "660ec94f91984030c7f24dbe"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+},
+{
+  "_id": {
+    "$oid": "6615414ee0e9c8361966175a"
+  },
+  "first_name": "Tai",
+  "last_name": "Khoan",
+  "gender": false,
+  "birthday": {
+    "$date": "2024-03-31T17:00:00.000Z"
+  },
+  "groups": [],
+  "friends": [],
+  "created_at": {
+    "$date": "2024-04-09T13:23:26.742Z"
+  },
+  "updated_at": {
+    "$date": "2024-04-11T12:13:25.816Z"
+  },
+  "user_id": {
+    "$oid": "66153ff6e0e9c83619661756"
+  },
+  "chats": [],
+  "_class": "vn.edu.iuh.models.UserInfo"
+}]

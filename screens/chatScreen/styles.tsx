@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: "row",
     marginStart: "2%",
-    alignItems: "center",
   },
   headerText: {
     fontSize: 18,
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
     width: "78%",
   },
   icon: {
-    marginLeft: "8%"
+    marginLeft: 5
   },
   // footer (input chat)
   chat: {
@@ -65,13 +64,14 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     backgroundColor: white,
     justifyContent: "space-between",
+    
   },
   inputIncludeText:{
-    width:"15%"
+    width:"19%"
     
   },
   inputEmptyText:{
-    width:"35%"
+    width:"20%"
   }
 })
 

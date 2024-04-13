@@ -43,7 +43,7 @@ const SignInScreen = ({ navigation }) => {
     onError: (error) => {
       Alert.alert(
         "Lỗi",
-        "Sai số điện thoại hoặc mật khẩu",
+        error["response"].data.detail,
         [
           {
             text: "OK",
