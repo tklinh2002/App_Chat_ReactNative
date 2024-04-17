@@ -16,8 +16,7 @@ import InputChat from "./inputChat";
 import styles from "./styles";
 import HeaderChat from "./header";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import base64 from 'react-native-base64'
-
+import { decode } from "base64-arraybuffer";
 import {
   deleteMessageApi,
   getChatRoomApi,
@@ -30,6 +29,7 @@ import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import http, { ip } from "../../utils/http";
 import axios from "axios";
+import { connectSocket } from "../../utils/socket";
 let stompClient = null;
 let isConnected = false;
 const ChatScreen = ({ route }) => {
@@ -39,6 +39,17 @@ const ChatScreen = ({ route }) => {
   const userID = queryClient.getQueryData(["profile"])["id"];
   const [messages, setMessages] = useState([]);
 
+  const getChatRoom = useQuery({
+    queryKey: ["chatRoom", chatRoom.id],
+    queryFn: () =>
+      getChatRoomApi(token, chatRoom.id)
+        .then((res) => {
+          setMessages([...res.data].reverse());
+          return res.data;
+        })
+        .catch((err) => console.log(err["response"])),
+  });
+  
   // socket
   const [chat, setChat] = useState({
     chatId: chatRoom.id,
@@ -49,9 +60,11 @@ const ChatScreen = ({ route }) => {
   useEffect(() => {
     const fetchData = async () => {
       // Kết nối với máy chủ WebSocket khi component được mount
-      if (!isConnected) {
-        await connectSocket();
-        isConnected = true;
+      try {
+        stompClient = await connectSocket();
+        await stompClient.connect({}, onConnected);
+      } catch (error) {
+        console.error("Socket connection error:", error);
       }
       await queryClient.invalidateQueries({
         queryKey: ["chatRoom", chatRoom.id],
@@ -64,24 +77,10 @@ const ChatScreen = ({ route }) => {
       queryClient.invalidateQueries({ queryKey: ["getListChatRoom"] });
     };
   }, []);
-  const getChatRoom = useQuery({
-    queryKey: ["chatRoom", chatRoom.id],
-    queryFn: () =>
-      getChatRoomApi(token, chatRoom.id)
-        .then((res) => {
-          setMessages([...res.data].reverse());
-          return res.data;
-        })
-        .catch((err) => console.log(err["response"])),
-  });
-  const connectSocket = async () => {
-    let Sock = new SockJS(`http://${ip}:8080/api/ws`);
-    stompClient = over(Sock);
-    stompClient.connect({}, onConnected, (error) => console.log(error));
-  };
-  const onConnected = () => {
+ 
+  const onConnected = async () => {
     setChat({ ...chat, connected: true });
-    stompClient.subscribe("/chatroom/" + chat.chatId, onPrivateMessageReceived);
+    await stompClient.subscribe("/chatroom/" + chat.chatId, onPrivateMessageReceived);
   };
   const onPrivateMessageReceived = async (payload) => {
     const data = (await JSON.parse(payload.body)) as any;
@@ -99,60 +98,28 @@ const ChatScreen = ({ route }) => {
       }
     });
   };
-  const dataURLtoFile = (dataurl, filename) => {
-    var arr = dataurl.split(","),
-      mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]),
-      n = bstr.length,
-      u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
-  };
   const handleSendMessage = async (message, media) => {
-    // console.log(media);
-    // return
     const attachments = [];
-    // get link upload
-    media.forEach(async (item) => {
-      const res = await getLinkuploadApi(token, {
-        filename: item?.fileName,
-        type: "MESSAGE",
-      }).then(async (res) => {
-        // console.log(res.data);
-        // upload file
-        const formdata = new FormData();
-        formdata.append("file",{
-          uri: item.uri,
-          type: item.mimeType,
-          name: item.fileName,
+    await Promise.all(
+      media.map(async (item) => {
+        const res = await getLinkuploadApi(token, {
+          filename: item?.fileName,
+          type: "MESSAGE",
         });
-        // return
-        // const file = atob(item.base64)
-        // const binaryData = await base64.encode(item.base64)
-        // console.log("binary "+ binaryData)
+        const arrayBuffer = await decode(item.base64);
         const resUpload = await axios
-          .put(res.data, item.uri,{
-            
-          })
-          .catch((e) => console.log(e))
+          .put(res.data, arrayBuffer)
           .then(async (res2) => {
-            const newUrl = await res.data.substring(0, res.data.indexOf("?"));
-            console.log("newUrl" + newUrl);
-            await attachments.push({
+            const newUrl = res.data.substring(0, res.data.indexOf("?"));
+            attachments.push({
               type: item.type.toUpperCase(),
               url: newUrl,
               filename: newUrl.split("/")[newUrl.split("/").length - 1],
             });
-          });
-        return res.data.url;
-      });
-    });
-    return
-    // gửi text
+          })
+          .catch((e) => console.log(e));
+      })
+    );
     await setChat({ ...chat, content: message });
     stompClient.send(
       "/app/chat/" + chat.chatId,
@@ -160,6 +127,7 @@ const ChatScreen = ({ route }) => {
       JSON.stringify({ sender: chat.sender, content: message, attachments })
     );
   };
+
   const handleDeleteMessage = async (messageId) => {
     const res = await deleteMessageApi(token, chatRoom.id, messageId);
     if (res.status != 200) {
@@ -223,12 +191,12 @@ const ChatScreen = ({ route }) => {
                 />
               );
             } else {
-              if (messages[index - 1]?.sender.id == item.sender.id)
+              if ( item.sender.id ==  messages[index + 1]?.sender.id)
                 return (
                   <ReceiveChat
                     key={item.messageId}
                     item={item}
-                    isSameUser={false}
+                    isSameUser={true} // không hiển thị avatar
                     onDeleteMessage={handleDeleteMessage}
                   />
                 );
@@ -237,7 +205,7 @@ const ChatScreen = ({ route }) => {
                   <ReceiveChat
                     key={item.messageId}
                     item={item}
-                    isSameUser={true}
+                    isSameUser={false} // hiển thị avatar
                     onDeleteMessage={handleDeleteMessage}
                   />
                 );

@@ -6,57 +6,31 @@ import {
   TouchableOpacity,
   Modal,
   Image,
+  TextInput,
 } from "react-native";
 import IconFontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { backgroundHeader, white } from "../../assets/colors";
 import Friend from "./friend";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getListContactApi } from "../../apis/user.api";
+import { Button } from "react-native-paper";
+import IconMaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const contacts = [
-  {
-    id: 1,
-    name: "Alice",
-    img: "D:/Code/cnm/vietchat/assets/images/images.jpg",
-  },
-  { id: 2, name: "Bob", img: "D:/Code/cnm/vietchat/assets/images/images.jpg" },
-  {
-    id: 3,
-    name: "Charlie",
-    img: "D:/Code/cnm/vietchat/assets/images/images.jpg",
-  },
-  {
-    id: 4,
-    name: "Charlie",
-    img: "D:/Code/cnm/vietchat/assets/images/images.jpg",
-  },
-  // Add more contacts as needed
-];
-
-// Sort contacts alphabetically by name
-const sortedContacts = contacts
-  .slice()
-  .sort((a, b) => a.name.localeCompare(b.name));
-
-// Group contacts into sections based on the initial letter of their names
-const groupedContacts = sortedContacts.reduce((acc, contact) => {
-  const initial = contact.name[0].toUpperCase();
-  if (!acc[initial]) {
-    acc[initial] = [];
-  }
-  acc[initial].push(contact);
-  return acc;
-}, {});
-const sections = Object.keys(groupedContacts).map((initial) => ({
-  title: initial,
-  data: groupedContacts[initial],
-}));
-
-
-const BodyModal = ({setListItem}) => {
-  const navigation = useNavigation();
+const BodyModal = ({ setListItem, navigation }) => {
   const [checkedItems, setCheckedItems] = useState([]);
+  const queryClient = useQueryClient();
+  const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
+  const [contacts, setContacts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
+  useEffect(() => {
+    setContacts([
+      ...(queryClient.getQueryData(["getListContact", "friend"]) as []),
+    ]);
+  }, []);
+  // checkbox
   useEffect(() => {
     setListItem(checkedItems);
   }, [checkedItems, setListItem]);
@@ -70,11 +44,44 @@ const BodyModal = ({setListItem}) => {
       );
     }
   };
+  // Sort contacts alphabetically by name
+  const filteredContacts = contacts.filter((contact) =>
+    contact.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const sortedContacts = filteredContacts
+    .slice()
+    .sort((a, b) => a.displayName.localeCompare(b.displayName));
+
+  const groupedContacts = sortedContacts.reduce((acc, contact) => {
+    const initial = contact.displayName[0].toUpperCase();
+    if (!acc[initial]) {
+      acc[initial] = [];
+    }
+    acc[initial].push(contact);
+    return acc;
+  }, {});
+
+  const sections = Object.keys(groupedContacts).map((initial) => ({
+    title: initial,
+    data: groupedContacts[initial],
+  }));
+
   return (
     <View style={{ marginTop: 5 }}>
+      <View style={styles.containerFind}>
+        <IconMaterialCommunityIcons name="magnify" color="black" size={20} />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Tìm kiếm bạn bè"
+          placeholderTextColor={"gray"}
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
+      </View>
       <SectionList
         sections={sections}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>{title}</Text>
@@ -82,15 +89,12 @@ const BodyModal = ({setListItem}) => {
         )}
         renderItem={({ item }) => (
           <Friend
-            id={item.id}
-            name={item.name}
-            image={item.img}
-            isChecked={checkedItems.includes(item.id)}
+            item={item}
+            isChecked={checkedItems.includes(item.profile.id)}
             onCheckboxPress={handleCheckboxPress}
           />
         )}
       />
-      
     </View>
   );
 };
@@ -142,6 +146,21 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 40,
     marginHorizontal: "2%",
+  },
+  containerFind: {
+    backgroundColor: "#FAFAFA",
+    flexDirection: "row",
+    height: 40,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    alignItems: "center",
+    marginVertical: 10,
+  },
+
+  textInput: {
+    fontSize: 15,
+    flex: 1,
+    marginLeft: 10,
   },
 });
 export default BodyModal;

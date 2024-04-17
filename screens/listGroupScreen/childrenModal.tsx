@@ -1,5 +1,15 @@
-import { View, StyleSheet, Text, TextInput, Image, Modal, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Image,
+  Modal,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import IconFontAwesome from "react-native-vector-icons/FontAwesome";
+import { TextInput as TextInputPaper } from "react-native-paper";
 import IconMaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import BodyContact from "../contacScreen/body";
 import BodyModal from "./bodyModal";
@@ -7,30 +17,65 @@ import { backgroundHeader } from "../../assets/colors";
 import IconFeather from "react-native-vector-icons/Feather";
 import IconIonicons from "react-native-vector-icons/Ionicons";
 import { useState } from "react";
-const ChildrenModal = ({setmodalvisiable}) => {
+import { createGroupApi } from "../../apis/group.api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+const ChildrenModal = ({ setmodalvisiable, navigation }) => {
   const [listItem, setListItem] = useState([]);
+  const [infoGroup, setInfoGroup] = useState({
+    name: "",
+    members: [],
+    thumbnailAvatar:null
+  });
+  const queryClient = useQueryClient();
+  const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
+  const createGroup = useMutation({
+    mutationKey: ["createGroup"],
+    mutationFn: ()=>createGroupApi(token, infoGroup),
+    onSuccess: (data) => {
+      console.log(data);
+      alert("Tạo nhóm thành công");
+    },
+    onError: (err) => {
+      console.log(err["data"]["detail"]);
+      alert("Tạo nhóm thất bại");
+    }
+  })
+  const handleCreateGroup = async () => {
+    createGroup.mutate();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <IconFeather name="x" color="black" size={25} onPress={() => setmodalvisiable(true)}/>
-        <Text style={{ fontSize: 20, marginLeft: 10, flex:1 }}>Nhóm mới</Text>
-        {listItem.length > 0 ? (<TouchableOpacity style={styles.button}>
-          <IconIonicons name="add" color="white" size={30} />
-        </TouchableOpacity>) : (<></>)}
+        <IconFeather
+          name="x"
+          color="black"
+          size={25}
+          onPress={() => setmodalvisiable(false)}
+        />
+        <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>Nhóm mới</Text>
+        {listItem.length > 0 ? (
+          <TouchableOpacity onPress={handleCreateGroup} style={styles.button}>
+            <IconIonicons name="add" color="white" size={30} />
+          </TouchableOpacity>
+        ) : (
+          <></>
+        )}
       </View>
       <View style={styles.containerName}>
         <View style={styles.icon}>
           <IconFontAwesome name="camera" color="black" size={30} />
         </View>
-        <TextInput style={styles.textInput} placeholder="Dặt tên nhóm" />
+        <TextInputPaper
+          mode="flat"
+          style={[styles.textInput, { backgroundColor: "white" }]}
+          placeholder="Đặt tên nhóm"
+          value={infoGroup.name}
+          onChangeText={(text) => setInfoGroup({ ...infoGroup, name: text })}
+        />
       </View>
 
-      <View style={styles.containerFind}>
-        <IconMaterialCommunityIcons name="magnify" color="black" size={20} />
-        <TextInput style={styles.textInput} placeholder="Tìm kiếm bạn bè" placeholderTextColor={"gray"}/>
-      </View>
       <View>
-        <BodyModal setListItem={setListItem}/>
+        <BodyModal setListItem={setListItem} navigation={navigation} />
       </View>
     </View>
   );

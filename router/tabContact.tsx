@@ -7,7 +7,7 @@ const Tab = createMaterialTopTabNavigator();
 const TabContact =()=> {
   return (
     <Tab.Navigator
-    initialRouteName="ListGroup"
+    initialRouteName="ListContact"
     >
       <Tab.Screen name="ListContact" component={ContactScreen} options={{tabBarLabel:"Bạn bè"}}/>
       <Tab.Screen name="ListGroup" component={ListGroupScreen} options={{tabBarLabel:"Nhóm"}}/>

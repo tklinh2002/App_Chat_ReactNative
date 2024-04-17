@@ -1,31 +1,28 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Image, TouchableOpacity, StyleSheet, Text, View } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
-import IconSimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { backgroundHeader, white } from "../../assets/colors";
 import { CheckBox } from "@rneui/themed";
+import { Avatar } from "react-native-elements";
 
-const Friend = ({ id, name, image, isChecked, onCheckboxPress }) => {
-  const navigation = useNavigation();
-
-  const handPress = () => {
-    navigation.navigate("Chat" as never);
-  };
+const Friend = ({ item, isChecked, onCheckboxPress }) => {
 
   return (
     <View>
-      <TouchableOpacity style={styles.object} onPress={() => onCheckboxPress(id, !isChecked)}>
+      <TouchableOpacity style={styles.object} onPress={() => onCheckboxPress(item.profile.id, !isChecked)}>
         <CheckBox
           checked={isChecked}
           checkedIcon="dot-circle-o"
           uncheckedIcon="circle-o"
         />
-        <Image
-          style={styles.img}
-          source={require("D:/Code/cnm/vietchat/assets/images/images.jpg")}
+        <Avatar
+          rounded={true}
+          size={"medium"}
+          title={item.displayName[0]}
+          activeOpacity={0.7}
+          source={{uri: item.profile.thumbnailAvatar }}
         />
-        <Text style={{ fontSize: 18, flex: 1 }}>{name}</Text>
+        <Text style={{ fontSize: 18, flex: 1 }}>{item.displayName}</Text>
       </TouchableOpacity>
     </View>
   );

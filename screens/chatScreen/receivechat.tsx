@@ -10,9 +10,12 @@ import {
 import { white } from "../../assets/colors";
 import React, { useState } from "react";
 import { Button } from "react-native-paper";
+import { ResizeMode, Video } from "expo-av";
+import ChildrenModalForwadMess from "./modalForwardMess";
 
 const ReceiveChat = ({ item, isSameUser, onDeleteMessage }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleForward, setModalVisibleForward] = useState(false);
 
   const openModal = () => {
     setModalVisible(true);
@@ -28,38 +31,79 @@ const ReceiveChat = ({ item, isSameUser, onDeleteMessage }) => {
   };
   return (
     <TouchableOpacity style={styles.chat} onLongPress={openModal}>
-      {!isSameUser ? (
-        <React.Fragment>
-          {item.sender.thumbnailAvatar !== null &&
-          item.sender.thumbnailAvatar !== "" ? (
-            <Image
-              style={styles.img}
-              source={{
-                uri: item.sender.thumbnailAvatar,
-              }}
-            />
-          ) : (
-            <Image
-              style={styles.img}
-              source={require("../../assets/images/images.jpg")}
-            />
-          )}
-        </React.Fragment>
-      ) : (
-        <View style={styles.img}></View>
-      )}
+      {/* text  */}
+      <View style={{ flexDirection: "row" }}>
+        {!isSameUser ? (
+          <React.Fragment>
+            {item.sender.thumbnailAvatar !== null &&
+            item.sender.thumbnailAvatar !== "" ? (
+              <Image
+                style={styles.img}
+                source={{
+                  uri: item.sender.thumbnailAvatar,
+                }}
+              />
+            ) : (
+              <Image
+                style={styles.img}
+                source={require("../../assets/images/images.jpg")}
+              />
+            )}
+          </React.Fragment>
+        ) : (
+          <View style={styles.img}></View>
+        )}
 
-      <View style={styles.container}>
-        <Text
-          style={
-            item.status == "UNSEND"
-              ? { fontSize: 17, marginHorizontal: "3%", color: "#8A8A8A" }
-              : { fontSize: 17, marginHorizontal: "3%" }
-          }
-        >
-          {item?.content}
-        </Text>
+        {/* text */}
+        {item.content !== "" && (
+          <View style={[styles.container, { maxWidth: "70%" }]}>
+            <Text
+              style={
+                item.status == "UNSEND"
+                  ? { fontSize: 17, marginHorizontal: "3%", color: "#8A8A8A" }
+                  : { fontSize: 17, marginHorizontal: "3%" }
+              }
+            >
+              {item?.content}
+            </Text>
+          </View>
+        )}
       </View>
+
+      {/* Hiển thị hình ảnh video nếu không phải unsend */}
+      {item.status != "UNSEND" && (
+        <View
+          style={{ flexDirection: "row", flexWrap: "wrap", marginLeft: "7%" }}
+        >
+          {!(item.attachments == null) && (
+            <>
+              {[...item.attachments].map((item) => (
+                <View key={item.url}>
+                  {item.type === "IMAGE" ? (
+                    <TouchableOpacity>
+                      <Image
+                        source={{ uri: item.url }}
+                        style={{ width: 200, height: 200 }}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity>
+                      <Video
+                        source={{ uri: item.url }}
+                        style={{ width: 200, height: 200 }}
+                        useNativeControls={true}
+                        resizeMode={ResizeMode.CONTAIN}
+                      />
+                    </TouchableOpacity>
+                  )}
+                </View>
+              ))}
+            </>
+          )}
+        </View>
+      )}
+      {/* Modal ooption */}
       <Modal
         animationType="fade"
         transparent={true}
@@ -91,14 +135,35 @@ const ReceiveChat = ({ item, isSameUser, onDeleteMessage }) => {
           <TouchableOpacity style={{ marginVertical: 5 }} onPress={handDelete}>
             <Button>Xóa tin nhắn</Button>
           </TouchableOpacity>
+          {item.status != "UNSEND" && (
+            <TouchableOpacity
+              style={{ marginVertical: 5 }}
+              onPress={() => {
+                setModalVisible(false);
+                setModalVisibleForward(true);
+              }}
+            >
+              <Button>Chuyển tiếp tin nhắn</Button>
+            </TouchableOpacity>
+          )}
         </View>
+      </Modal>
+      {/* forward message */}
+      <Modal
+        visible={modalVisibleForward}
+        animationType="slide"
+        transparent={true}
+      >
+        <ChildrenModalForwadMess
+          setModalVisible={setModalVisibleForward}
+          item={item}
+        />
       </Modal>
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    width: "70%",
     backgroundColor: white,
     borderRadius: 10,
     paddingVertical: 12,
@@ -110,7 +175,6 @@ const styles = StyleSheet.create({
     marginHorizontal: "2%",
   },
   chat: {
-    flexDirection: "row",
     marginVertical: 6,
     transform: [{ scaleY: -1 }],
   },

@@ -32,7 +32,7 @@ export const registerAPI = (
     birthday,
     password,
   });
-  return http.post("/v1/auth/register", body, { headers }); 
+  return http.post("/v1/auth/register", body, { headers });
 };
 
 export const getProfileAPI = (token: string) =>

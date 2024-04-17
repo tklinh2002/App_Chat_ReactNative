@@ -12,10 +12,11 @@ import React, { useState } from "react";
 import styles from "./styles";
 import IconFeather from "react-native-vector-icons/Feather";
 import IconIonicons from "react-native-vector-icons/Ionicons";
-import IconAntDesign from "react-native-vector-icons/AntDesign";
 import IconSimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import * as ImagePicker from "expo-image-picker";
 import { ResizeMode, Video } from "expo-av";
+import IconEntypo from "react-native-vector-icons/Entypo";
+import * as DocumentPicker from "expo-document-picker";
 const InputChat = ({ onSendMessage }) => {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => {
@@ -26,10 +27,9 @@ const InputChat = ({ onSendMessage }) => {
   };
   const handSendText = async () => {
     // console.log(media);
-      onSendMessage(text, media);
-      setMedia([]);
-      setText("");
-    
+    onSendMessage(text, media);
+    setMedia([]);
+    setText("");
   };
   const [text, setText] = useState("");
   const inputStyle = isFocused ? styles.focusedInput : styles.defaultInput;
@@ -39,12 +39,25 @@ const InputChat = ({ onSendMessage }) => {
     : styles.inputIncludeText;
   // pick media
   const [media, setMedia] = useState([]);
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsMultipleSelection: true,
-      base64: true
-    });
+  // useLibrary : true -> pick image from library, false -> pick image from camera
+  const pickImage = async (useLibrary) => {
+    let result = null;
+    if (useLibrary) {
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsMultipleSelection: true,
+        base64: true,
+        quality: 1,
+      });
+    } else {
+      await ImagePicker.requestCameraPermissionsAsync();
+      result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsMultipleSelection: true,
+        base64: true,
+        quality: 1,
+      });
+    }
 
     if (!result.canceled) {
       const newImages = result.assets.filter((item) => {
@@ -55,10 +68,19 @@ const InputChat = ({ onSendMessage }) => {
   };
 
   // pickdocument
-  const pickDocument = () => {
-    console.log(atob(media[0].base64));
+  const pickDocument = async () => {
+    try {
+      let result = await DocumentPicker.getDocumentAsync({
+        type: "*/*",
+        copyToCacheDirectory: false,
+      });
 
+      if (!result.canceled) {
+        console.log(result.assets[0].file?.arrayBuffer());
+      }
+    } catch (error) {}
   };
+
   const handleDeteleMedia = (fileName) => () => {
     const newMedia = media.filter((item) => item.fileName !== fileName);
     setMedia(newMedia);
@@ -105,7 +127,7 @@ const InputChat = ({ onSendMessage }) => {
           numberOfLines={2}
           scrollEnabled={true} // Enable scrolling
         />
-        <View style={[styles.inputIcon, iconStyle]}>
+        <View style={[styles.inputIcon]}>
           {text === "" ? (
             <>
               {media.length > 0 && (
@@ -113,19 +135,46 @@ const InputChat = ({ onSendMessage }) => {
                   <IconFeather name="send" color={backgroundHeader} size={25} />
                 </TouchableOpacity>
               )}
-              <TouchableOpacity onPress={pickDocument}>
+              <TouchableOpacity
+                onPress={pickDocument}
+                style={{ marginRight: 10 }}
+              >
+                <IconEntypo name="attachment" color="black" size={25} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => pickImage(false)}
+                style={{ marginRight: 10 }}
+              >
                 <IconIonicons name="camera" color="black" size={25} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={pickImage} style={{marginRight:10}}>
+              <TouchableOpacity
+                onPress={() => pickImage(true)}
+                style={{ marginRight: 10 }}
+              >
                 <IconSimpleLineIcons name="picture" color="black" size={25} />
               </TouchableOpacity>
             </>
           ) : (
             <>
-              <TouchableOpacity onPress={handSendText} >
+              <TouchableOpacity onPress={handSendText} style={{ marginRight: 10 }}>
                 <IconFeather name="send" color={backgroundHeader} size={25} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={pickImage} style={{marginRight:10}}>
+              <TouchableOpacity
+                onPress={pickDocument}
+                style={{ marginRight: 10 }}
+              >
+                <IconEntypo name="attachment" color="black" size={25} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => pickImage(false)}
+                style={{ marginRight: 10 }}
+              >
+                <IconIonicons name="camera" color="black" size={25} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => pickImage(true)}
+                style={{ marginRight: 10 }}
+              >
                 <IconSimpleLineIcons name="picture" color="black" size={25} />
               </TouchableOpacity>
             </>
