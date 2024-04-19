@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import ArrowIcon from "../../assets/icon/ArrowIcon";
 import http from "../../utils/http";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Authentication = ({ navigation, route }) => {
   const { phoneNumber } = route.params;
@@ -19,7 +20,7 @@ const Authentication = ({ navigation, route }) => {
   const [failureModalVisible, setFailureModalVisible] = useState(false);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [successRequest, setSuccessRequest] = useState(false);
-
+  const queryClient = useQueryClient();
   const isCodeComplete = verificationCode.replace(/\s/g, "").length === 6;
   const handleSubmit = async () => {
     try {
@@ -36,6 +37,7 @@ const Authentication = ({ navigation, route }) => {
       }
       const data = await response.data;
       const token = data.accessToken;
+      queryClient.setQueryData(["phoneLogin"], phoneNumber);
       console.log(data);
       setSuccessModalVisible(true);
       setTimeout(() => {

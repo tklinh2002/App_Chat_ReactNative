@@ -27,21 +27,27 @@ const ReceiveInvite = () => {
   });
 
   if (getListContact.isLoading) return <Text>Loading...</Text>;
+
   const handleReject = async (id) => {
     const res = await rejectFriendApi(token, id)
-      .then((res) => {
-        Alert.alert("Thông báo", res.data);
-        contacts.filter((item) => item.profile.id !== id);
+      .then(async (res) => {
+        await queryClient.invalidateQueries({ queryKey: ["getListChatRoom"] });
+        await Alert.alert("Thông báo", res.data);
+        setContacts(prevContacts => prevContacts.filter(item => item.profile.id !== id));
       })
       .catch((err) => console.log(err["response"]));
   };
   const handleSubmit = async (id) => {
+    console.log("id", id);
     const res = await acceptFriendApi(token, id)
-      .then((res) => {
-        Alert.alert("Thông báo", res.data);
-        contacts.filter((item) => item.profile.id !== id);
+      .then(async (res) => {
+        await queryClient.invalidateQueries({ queryKey: ["getListChatRoom"] });
+        await Alert.alert("Thông báo", res.data);
+        setContacts(prevContacts => prevContacts.filter(item => item.profile.id !== id));
       })
-      .catch((err) => console.log(err["response"]));
+      .catch((err) => {
+        Alert.alert("Thông báo", err.response.data.detail);
+      });
   };
   return (
     <ScrollView style={{ marginTop: 10 }}>

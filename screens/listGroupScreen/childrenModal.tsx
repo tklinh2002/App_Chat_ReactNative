@@ -10,8 +10,6 @@ import {
 } from "react-native";
 import IconFontAwesome from "react-native-vector-icons/FontAwesome";
 import { TextInput as TextInputPaper } from "react-native-paper";
-import IconMaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import BodyContact from "../contacScreen/body";
 import BodyModal from "./bodyModal";
 import { backgroundHeader } from "../../assets/colors";
 import IconFeather from "react-native-vector-icons/Feather";
@@ -24,24 +22,23 @@ const ChildrenModal = ({ setmodalvisiable, navigation }) => {
   const [infoGroup, setInfoGroup] = useState({
     name: "",
     members: [],
-    thumbnailAvatar:null
+    thumbnailAvatar: null,
   });
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
-  const createGroup = useMutation({
-    mutationKey: ["createGroup"],
-    mutationFn: ()=>createGroupApi(token, infoGroup),
-    onSuccess: (data) => {
-      console.log(data);
-      alert("Tạo nhóm thành công");
-    },
-    onError: (err) => {
-      console.log(err["data"]["detail"]);
-      alert("Tạo nhóm thất bại");
-    }
-  })
+
   const handleCreateGroup = async () => {
-    createGroup.mutate();
+    const rs = await createGroupApi(token, infoGroup, listItem)
+      .then(async (res) => {
+        await queryClient.invalidateQueries({ queryKey: ["getListChatRoom"] });
+        await queryClient.invalidateQueries({ queryKey: ["getListGroup"] });
+        await Alert.alert("Tạo nhóm thành công");
+        await setmodalvisiable(false);
+        return res.data;
+      })
+      .catch((err) => {
+        Alert.alert("Tạo nhóm thất bại", err.response.data.detail);
+      });
   };
   return (
     <View style={styles.container}>
@@ -89,7 +86,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#F7F7F7",
     height: 50,
-    paddingRight: 10,
+    paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,

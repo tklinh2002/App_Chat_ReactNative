@@ -7,6 +7,7 @@ import InputChat from "./screens/chatScreen/inputChat";
 import { View } from "react-native";
 import { connectSocket } from "./utils/socket";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import OptionChatGroup from "./screens/optionScreen/optionChatGroup";
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -31,6 +32,7 @@ const App = () => {
     // >
     //   <InputChat onSendMessage={abc} />
     // </View>
+    // <OptionChatGroup navigation={navigator}/>
   );
 };
 export default App;

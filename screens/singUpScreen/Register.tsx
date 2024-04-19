@@ -17,7 +17,8 @@ import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import http from "../../utils/http";
 import { RadioButton } from "react-native-paper";
-import { registerAPI } from "../../apis/auth.api";
+import { loginAPI, registerAPI } from "../../apis/auth.api";
+import { useQueryClient } from "@tanstack/react-query";
 const Register = ({ navigation, route }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -28,6 +29,8 @@ const Register = ({ navigation, route }) => {
   const [failureModalVisible, setFailureModalVisible] = useState(false);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const { accessToken } = route.params;
+  const queryClient = useQueryClient();
+  const phone = queryClient.getQueryData(["phoneLogin"]);
   // const accessToken = "1234";
 
   // const { accessToken } = useState('1234');
@@ -97,27 +100,42 @@ const Register = ({ navigation, route }) => {
       formattedDate,
       password,
       accessToken
-    ).then((res) => {
-      Alert.alert(
-        "Thành công",
-        "Đăng ký thành công, quay lại trang đăng nhập để đăng nhập",
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "Home" }],
-              });
+    )
+      .then((res) => {
+        Alert.alert(
+          "Thành công",
+          "Đăng ký thành công, quay lại trang đăng nhập để đăng nhập",
+          [
+            {
+              text: "OK",
+              onPress: async () => {
+                const phone = await loginAPI(firstName, password).then(
+                  (res) => {
+                    queryClient.setQueryData(["dataLogin"], res.data);
+
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: "TabChat" }],
+                    });
+                  }
+                ).catch((err) => {
+                  Alert.alert("Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: "Home" }],
+                  });
+                });
+                
+              },
+              style: "default",
             },
-            style: "default",
-          },
-        ],
-        { cancelable: false }
-      );
-    }).catch((err) => {
-      setFailureModalVisible(true);
-    });
+          ],
+          { cancelable: false }
+        );
+      })
+      .catch((err) => {
+        setFailureModalVisible(true);
+      });
   };
   const handleCloseModal = () => {
     setFailureModalVisible(false);

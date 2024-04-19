@@ -32,13 +32,15 @@ import axios from "axios";
 import { connectSocket } from "../../utils/socket";
 let stompClient = null;
 let isConnected = false;
-const ChatScreen = ({ route }) => {
+const ChatScreen = ({navigation, route }) => {
   const { chatRoom } = route.params;
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
   const userID = queryClient.getQueryData(["profile"])["id"];
   const [messages, setMessages] = useState([]);
 
+  useEffect(() => {
+  }, []);
   const getChatRoom = useQuery({
     queryKey: ["chatRoom", chatRoom.id],
     queryFn: () =>
@@ -134,7 +136,6 @@ const ChatScreen = ({ route }) => {
       Alert.alert("Error", res.data.detail);
       return;
     }
-    console.log(res.data);
     setMessages((prevMessages) =>
       prevMessages.filter((message) => message.messageId !== messageId)
     );
@@ -173,7 +174,7 @@ const ChatScreen = ({ route }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View style={styles.header}>
-        <HeaderChat item={chatRoom} />
+        <HeaderChat item={chatRoom} navigation={navigation}/>
       </View>
 
       <ScrollView style={styles.bodyChat}>

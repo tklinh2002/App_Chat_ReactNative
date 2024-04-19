@@ -32,13 +32,13 @@ const ObjectReceive = ({ data, handleSubmit, handleReject }) => {
             style={{ justifyContent: "space-between", flexDirection: "row" }}
           >
             <TouchableOpacity
-            onPress={() => handleReject(data.profile.id)}
+            onPress={ async() => await handleReject(data.profile.id)}
               style={[styles.button, { backgroundColor: "#E0E0E0" }]}
             >
               <Text style={styles.text}>Từ chối</Text>
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={() => handleSubmit(data.profile.id)}
+            onPress={ async () => await handleSubmit(data.profile.id)}
               style={[styles.button, { backgroundColor: "#E9F6FF" }]}
             >
               <Text style={[styles.text, { color: "#1187F1" }]}>Đồng ý</Text>

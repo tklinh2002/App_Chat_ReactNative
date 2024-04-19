@@ -7,7 +7,7 @@ import TabInvite from "./tabInvite";
 import { backgroundHeader } from "../assets/colors";
 import Hearder from "../screens/components/header";
 import { Title } from "react-native-paper";
-import OptionScreen from "../screens/optionScreen";
+import OptionScreen from "../screens/optionScreen/optionChat";
 import RegisterForm from "../screens/singUpScreen/RegisterForm";
 import Authentication from "../screens/singUpScreen/Authentication";
 import FindScreen from "../screens/findScreen/FindScreen";
@@ -17,6 +17,7 @@ import ConfirmOTP from "../screens/forgetPasswordScreen/confirmOTP";
 import ResetPassword from "../screens/forgetPasswordScreen/ResetPassword";
 import ResultFindProfile from "../screens/findScreen/ResultFindProfile";
 import DetailProfile from "../screens/profileScreen/DetailProfile";
+import OptionChatGroup from "../screens/optionScreen/optionChatGroup";
 
 const Stack = createNativeStackNavigator();
 
@@ -64,8 +65,15 @@ const Route = () => {
         }}
       />
       <Stack.Screen
-        name="Option"
+        name="OptionChat"
         component={OptionScreen}
+        options={{
+          header: () => <Hearder title={"Tùy chọn"} />,
+        }}
+      />
+      <Stack.Screen
+        name="OptionChatGroup"
+        component={OptionChatGroup}
         options={{
           header: () => <Hearder title={"Tùy chọn"} />,
         }}

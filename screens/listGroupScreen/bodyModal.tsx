@@ -3,19 +3,12 @@ import {
   Text,
   StyleSheet,
   SectionList,
-  TouchableOpacity,
-  Modal,
-  Image,
   TextInput,
 } from "react-native";
-import IconFontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { backgroundHeader, white } from "../../assets/colors";
 import Friend from "./friend";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getListContactApi } from "../../apis/user.api";
-import { Button } from "react-native-paper";
+import { useQueryClient } from "@tanstack/react-query";
 import IconMaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const BodyModal = ({ setListItem, navigation }) => {

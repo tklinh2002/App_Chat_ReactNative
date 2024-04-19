@@ -1,71 +1,36 @@
-import { ScrollView, View } from "react-native"
-import ObjectChat from "../listChatScreen/objectChat"
-import ObjectSend from "./objectSend"
-const list = [
-    {
-        "id": 1,
-        "name": "Người Dùng 1",
-        "img": "avatar1.jpg",
-        "date": "2024-01-31",
-        "title": "abc"
-    },
-    {
-        "id": 2,
-        "name": "Người Dùng 2",
-        "img": "avatar2.jpg",
-        "date": "2024-01-31",
-        "title": "abc"
-    },
-    {
-        "id": 3,
-        "name": "Người Dùng 2",
-        "img": "avatar2.jpg",
-        "date": "2024-01-31",
-        "title": "abc"
-    },
-    {
-        "id": 4,
-        "name": "Người Dùng 2",
-        "img": "avatar2.jpg",
-        "date": "2024-01-31",
-        "title": "abc"
-    },
-    {
-        "id": 5,
-        "name": "Người Dùng 2",
-        "img": "avatar2.jpg",
-        "date": "2024-01-31",
-        "title": "abc"
-    },
-    {
-        "id": 6,
-        "name": "Người Dùng 2",
-        "img": "avatar2.jpg",
-        "date": "2024-01-31",
-        "title": "abc"
-    },
-    {
-        "id": 7,
-        "name": "Người Dùng 2",
-        "img": "avatar2.jpg",
-        "date": "2024-01-31",
-        "title": "abc"
-    },
-    {
-        "id": 8,
-        "name": "Người Dùng 2",
-        "img": "avatar2.jpg",
-        "date": "2024-01-31",
-        "title": "abc"
-    },
-]
-const SendInvite=()=>{
-    return(
-        <ScrollView style={{marginTop:10}}>
-            {list.map((element) => (
-                <ObjectSend key={element.id} data={element} />
-            ))}
-        </ScrollView>
-    )
-}
-export default SendInvite
+import { ScrollView, View, Text } from "react-native";
+import ObjectChat from "../listChatScreen/objectChat";
+import ObjectSend from "./objectSend";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { getListContactApi } from "../../apis/user.api";
+
+const SendInvite = ({navigation}) => {
+  const queryClient = useQueryClient();
+  const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
+  const [contacts, setContacts] = useState([]);
+
+  const getListContact = useQuery({
+    queryKey: ["getListContact", "sent"],
+    queryFn: () =>
+      getListContactApi(token, "sent")
+        .then((res) => {
+          setContacts([...res.data]);
+          return res.data;
+        })
+        .catch((err) => console.log(err["response"])),
+  });
+
+  if (getListContact.isLoading) return <Text>Loading...</Text>;
+  const handleCancel = async (id) => {
+    console.log("id thu hồi", id);
+  }
+  return (
+    <ScrollView style={{ marginTop: 10 }}>
+      {contacts.map((element) => (
+        <ObjectSend key={element.profile.id} data={element} handleCancel={handleCancel}/>
+      ))}
+    </ScrollView>
+  );
+};
+export default SendInvite;

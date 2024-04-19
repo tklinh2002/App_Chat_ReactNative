@@ -58,7 +58,15 @@ export const unsentMessageApi = (token, chatRoomId, messageId) => {
 };
 
 export const getLinkuploadApi = (token, file) => {
-  return http.post(`/v1/files`,file ,{
+  return http.post(`/v1/files`, file, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+// lấy thông tin chat room
+export const getChatDetailApi = (token, chatRoomId) => {
+  return http.get(`/v1/chats/${chatRoomId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

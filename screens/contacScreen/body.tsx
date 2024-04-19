@@ -16,8 +16,8 @@ import { getListContactApi } from "../../apis/user.api";
 const BodyContact = () => {
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
-  const [contacts, setContacts] = useState([]);
   const navigation = useNavigation();
+  const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
     setContacts([
@@ -56,7 +56,7 @@ const BodyContact = () => {
       </TouchableOpacity>
       <SectionList
         sections={sections}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.profile.id}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>{title}</Text>

@@ -12,6 +12,7 @@ import ArrowIcon from "../../assets/icon/ArrowIcon";
 import PhoneInput from "react-native-phone-input";
 import { Checkbox } from "react-native-paper";
 import http from "../../utils/http";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 const RegisterForm = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -22,7 +23,7 @@ const RegisterForm = ({ navigation }) => {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [failureModalVisible, setFailureModalVisible] = useState(false);
-
+  
   const handleVerifyCode = () => {
     setModalVisible(false);
     setIsOverlayVisible(false);
@@ -58,9 +59,7 @@ const RegisterForm = ({ navigation }) => {
         phone: phoneNumber,
       })
       .then((response) => {
-        if (!response) {
-          throw new Error("Network response was not ok");
-        }
+       
         return response;
       })
       .then((data) => {

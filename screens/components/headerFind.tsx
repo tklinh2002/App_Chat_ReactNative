@@ -4,19 +4,20 @@ import Icon from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
 import { backgroundHeader } from "../../assets/colors";
 import { useQueryClient } from "@tanstack/react-query";
+import { connectSocket } from "../../utils/socket";
 
 const Header = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const navigation = useNavigation();
   const handLogOut = async () => {
-    await queryClient.clear()
+    await queryClient.clear();
+    const stompj = await connectSocket();
+    await stompj.disconnect();
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Home' as never }],
+      routes: [{ name: "Home" as never }],
     });
-    
-    
-  }
+  };
   return (
     <View style={styles.header}>
       <TouchableOpacity
@@ -48,7 +49,7 @@ const Header = () => {
         onPress={handLogOut}
       >
         <Icon name="log-out" color="#ffffff" size={30} />
-      </TouchableOpacity> 
+      </TouchableOpacity>
     </View>
   );
 };
