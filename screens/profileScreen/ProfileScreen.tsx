@@ -3,13 +3,16 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Modal, Tex
 import ArrowIcon from '../../assets/icon/ArrowIcon';
 import axios from 'axios';
 import { Avatar } from 'react-native-elements';
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { RadioButton } from "react-native-paper";
 import { useQueryClient } from '@tanstack/react-query';
+import http from '../../utils/http';
+import {
+    getLinkuploadApi,
+} from "../../apis/chat.api";
+import { decode } from "base64-arraybuffer";
 
-// import { launchImageLibrary } from 'react-native-image-picker';
-// import * as DocumentPicker from 'expo-document-picker';
-const ProfileScreen = ({ navigation,route }) => {
+const ProfileScreen = ({ navigation, route }) => {
     const [data, setData] = useState();
     const [coverPhoto, setCoverPhoto] = useState(require("../../assets/profileTest/wall3.jpg"));
     const [phoneNumber, setPhoneNumber] = useState('0929635572');
@@ -17,121 +20,146 @@ const ProfileScreen = ({ navigation,route }) => {
     const [lastName, setLastName] = useState('');
     const [birthday, setBirthday] = useState('');
     const [gender, setGender] = useState();
-    const [thumbnailAvatar, setThumbnailAvatar] = useState('');
+    const [thumbnailAvatar, setThumbnailAvatar] = useState();
+    const [coverImage, setCoverImage] = useState();
     const [showAvatarOptions, setShowAvatarOptions] = useState(false);
+    const [showCoverOptions, setShowCoverOptions] = useState(false);
     const [showMoreInfor, setMoreInfor] = useState(false);
     const [showInformation, setInformation] = useState(false);
     const [editInformation, setEditInformation] = useState(false);
     const [canEditInformation, setCanEditInformation] = useState(false);
     const [click, setClick] = useState(false)
     const defaultAvatar = require('../../assets/profileTest/defaultAVT.jpg')
-    const [coverImg, setCoverImg] = useState();
     const [profileData, setProfileData] = useState(null);
     const queryClient = useQueryClient();
     const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
-    // const clickMouse = () => {
-    //     if (click === false) setClick(true);
-    //     else setShowAvatarOptions(false)
-    // };
-    
+    const logoutToken = queryClient.getQueryData(["dataLogin"])["refreshToken"];
+
+    const [url, setURL] = useState("");
+    const [newUrl, setNewURL] = useState();
     useEffect(() => {
         getUserProfile();
     }, [profileData]);
 
     useEffect(() => {
         if (route.params && route.params.updatedData) {
-          setProfileData(route.params.updatedData);
+            setProfileData(route.params.updatedData);
         }
-      }, [route.params]);
-      const getUserProfile =  () => {
-        
-
+    }, [route.params]);
+    const getUserProfile = () => {
         try {
-             axios.get('http://172.20.10.3:8080/api/v1/users/profile',{headers: {
-             'Content-Type': 'application/json',
-             'Authorization': `Bearer ${token}`
-             }})
-             
-             
-             .then((res) => {
-                const data = res.data;
-                console.log('Thông tin người dùng:', data);
-                setData(data);
-                setFirstName(data.firstName);
-                setLastName(data.lastName);
-                setThumbnailAvatar(data.thumbnailAvatar);
-                setBirthday(data.birthday);
-                setGender(data.gender);
-            }).catch((error) => {
-                console.log(error)
-            });
+            http.get('/v1/users/profile', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    const data = res.data;
+                    console.log('Thông tin người dùng:', data);
+                    setData(data);
+                    setFirstName(data.firstName);
+                    setLastName(data.lastName);
+                    setThumbnailAvatar(data.thumbnailAvatar);
+                    setBirthday(data.birthday);
+                    setGender(data.gender);
+                    setCoverImage(data.coverImage)
+                }).catch((error) => {
+                    console.log(error)
+                });
         } catch (error) {
             console.error(error.message);
         }
     }
+    const pickImage = async (useLibrary: boolean) => {
+        let result = null;
+        if (useLibrary) {
+            result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                base64: true,
+                quality: 1,
+            });
+        } else {
+            await ImagePicker.requestCameraPermissionsAsync();
+            result = await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                base64: true,
+                quality: 1,
+            });
+        }
 
-    // const selectImage = async () => {
-    //     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (!result.canceled) {
+            const newImage = result.assets[0];
+            const uri = newImage.fileName
+            console.log(uri?.uri)
+            console.log("url: ", newImage?.uri)
+            setURL(uri);
+            http.put("/v1/users/profile", { thumbnailAvatar: newImage?.uri }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => {
+                console.log("res", res?.data);
+                setThumbnailAvatar(newImage?.uri);
+            })
+            return uri;
+        }
+    };
 
-    //     if (permissionResult.granted === false) {
-    //       alert('Permission to access camera roll is required!');
-    //       return;
-    //     }
+    const pickBackground = async (useLibrary: boolean) => {
+        let result = null;
+        if (useLibrary) {
+            result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                base64: true,
+                quality: 1,
+            });
+        } else {
+            await ImagePicker.requestCameraPermissionsAsync();
+            result = await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                base64: true,
+                quality: 1,
+            });
+        }
 
-    //     let result = await ImagePicker.launchImageLibraryAsync({
-    //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //       allowsEditing: true,
-    //       aspect: [4, 3],
-    //       quality: 1,
-    //     });
+        if (!result.canceled) {
+            const newImage = result.assets[0];
+            const uri = newImage.fileName
+            console.log(uri?.uri)
+            console.log("url: ", newImage?.uri)
+            setURL(uri);
+            http.put("/v1/users/profile", { coverImage: newImage?.uri }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => {
+                console.log("res", res?.data);
+                setCoverImage(newImage?.uri);
+            })
+            return uri;
+        }
+    };
 
-    //     if (!result.cancelled) {
-    //         setThumbnailAvatar(result.uri);
-    //     //   uploadImage(result.uri);
-    //     }
-    //   };
-
-    // const uploadImage = async () => {
-    //     try {
-    //         let result = await ImagePicker.launchImageLibraryAsync({
-    //             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //             allowsEditing: true,
-    //             aspect: [1, 1],
-    //             quality: 1,
-    //         });
-
-    //         // Kiểm tra xem người dùng đã chọn hình ảnh chưa
-    //         if (!result.cancelled) {
-    //             // Tạo FormData để chứa hình ảnh
-    //             const formData = new FormData();
-    //             formData.append('avatar', {
-    //                 uri: result.uri,
-    //                 name: 'avatar.jpg',
-    //                 type: 'image/jpg',
-    //             });
-
-    //             // Gửi yêu cầu tải lên hình ảnh
-    //             const response = await axios.post(
-    //                 'http://192.168.1.9:8080/api/v1/user/profile/upload-avatar',
-    //                 formData,
-    //                 {
-    //                     headers: {
-    //                         'Content-Type': 'multipart/form-data',
-    //                     },
-    //                 }
-    //             );
-
-    //             console.log('Upload avatar response:', response.data);
-    //             setThumbnailAvatar(result.uri);
-    //         } else {
-    //             console.log('User cancelled image selection');
-    //         }
-
-    //     } catch (error) {
-    //         console.error('Error uploading image:', error);
-    //     }
-    // };
-
+    const handleLogout = async () => {
+        const requestBody = {
+            token : logoutToken
+          };
+        try {
+            const response = await http.post('v1/auth/logout', requestBody
+            ).then((response) => {
+                console.log(response)
+                setMoreInfor(false)
+                navigation.navigate("Home")
+            }).catch((error) => {
+                console.log(error)
+            });
+        } catch (error) {
+            console.error('Lỗi khi gửi yêu cầu đăng xuất:', error);
+        }
+    };
 
     const handleViewAvatar = () => {
         setShowAvatarOptions(false);
@@ -141,186 +169,164 @@ const ProfileScreen = ({ navigation,route }) => {
         return gender ? 'Nam' : 'Nữ';
     }
     return (
-        <View style={{flex:1}}>
+        <View style={{ flex: 1 }}>
             <ScrollView style={styles.container}>
-            <Image
-                source={coverPhoto}
-                style={styles.coverPhoto}
-            />
-
-            {/* <TouchableOpacity style={styles.Button}>
-                <ArrowIcon width={30} height={30} color="#1a1a1a" />
-            </TouchableOpacity> */}
-
-            <TouchableOpacity style={[styles.Button, styles.SecondRightButton]} onPress={() => setMoreInfor(true)}>
-                <Image
-                    source={require('../../assets/icon/horiz.png')}
-                    style={styles.backIcon}
-                />
-            </TouchableOpacity>
-
-            <View style={styles.middleContent}>
-                <View style={styles.avatarContainer}>
-                    <TouchableOpacity onPress={() => setShowAvatarOptions(true)}>
-                        <Avatar
-                            size={100}
-                            rounded={true}
-                            source={thumbnailAvatar ? { uri: thumbnailAvatar } : defaultAvatar}
-                        />
-                    </TouchableOpacity>
-                </View>
-
-                <Text style={styles.username}>{firstName} {lastName}</Text>
-                <View style={styles.ButtonContainer}>
-                    <TouchableOpacity style={[styles.photoButton, { marginLeft: -10 }]}>
-                        <Image
-                            source={require('../../assets/icon/img.png')}
-                            style={styles.icon}
-                        />
-                        <Text style={styles.buttonText}>Ảnh của tôi</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={[styles.photoButton, { marginLeft: 10 }]}>
-                        <Image
-                            source={require('../../assets/icon/archive.png')}
-                             style={styles.icon}
-                        />
-                        <Text style={styles.buttonText}>Kho Ảnh</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <View style={styles.wallContainer}>
-                <Text style={styles.wallText}>Đây là nhật ký của bạn!</Text>
-            </View>
-            <View style={{ alignItems: 'center' }} >
-                <TouchableOpacity style={styles.postButton}>
-                    <Text style={styles.TextButton}>Đăng lên nhật ký</Text>
+                <TouchableOpacity onPress={() => setShowCoverOptions(true)}>
+                    <Image
+                        source={coverImage ? { uri: coverImage } : coverPhoto}
+                        style={styles.coverPhoto}
+                    />
                 </TouchableOpacity>
-            </View>
+                <TouchableOpacity style={[styles.Button, styles.SecondRightButton]} onPress={() => setMoreInfor(true)}>
+                    <Image
+                        source={require('../../assets/icon/horiz.png')}
+                        style={styles.backIcon}
+                    />
+                </TouchableOpacity>
 
-            {/* Modal hoặc component hiển thị tab nhỏ */}
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={showAvatarOptions}
-                onRequestClose={() => setShowAvatarOptions(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.optionContainer}>
-                        <TouchableOpacity style={styles.optionButton} onPress={() => handleViewAvatar}>
-                            <Text style={styles.optionText}>Xem ảnh đại diện</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionButton} >
-                            <Text style={styles.optionText}>Đổi ảnh đại diện</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionButton} onPress={() => setShowAvatarOptions(false)}>
-                            <Text style={{
-                                fontSize: 18,
-                                fontWeight: 'bold',
-                                color: 'red',
-                            }}>Hủy thao tác</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={showMoreInfor}
-                onRequestClose={() => setMoreInfor(false)}
-            >
-                <View style={styles.modalContainer2}>
-
-                    <View style={styles.optionContainer2}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: -25, marginTop: -5, paddingBottom: 20, color: '#1c70be' }}>{firstName} {lastName}</Text>
-                        <TouchableOpacity style={styles.optionButton} onPress={() => {
-                            setInformation(true)
-                        } } >
-                            <Text style={styles.optionText}>Thông tin</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionButton} onPress={()=>{
-                            console.log(showInformation)
-                        }}>
-                            <Text style={styles.optionText}>Đổi ảnh đại diện</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionButton} >
-                            <Text style={styles.optionText}>Đổi ảnh nền</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionButton} >
-                            <Text style={styles.optionText}>Cập nhật giới thiệu bản thân</Text>
-                        </TouchableOpacity>
-                        <View>
-                            <Text style={{ fontSize: 16, fontWeight: 'bold', marginLeft: -25, marginTop: 5, paddingBottom: 20, color: "#1c70be" }}>Cài đặt</Text>
-                        </View>
-                        <TouchableOpacity style={styles.optionButton} >
-                            <Text style={styles.optionText}>Quyền riêng tư</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionButton}>
-                            <Text style={styles.optionText}>Quản lý tài khoản</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionButton} >
-                            <Text style={styles.optionText}>Cài đặt chung</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionButton} onPress={() => setMoreInfor(false)}>
-                            <Text style={{
-                                fontSize: 18,
-                                fontWeight: 'bold',
-                                color: 'red',
-                            }}>Quay về trang cá nhân</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-            {/* MODAL THÔNG TIN */}
-            <Modal
-                visible={showInformation}
-                animationType="slide"
-                onRequestClose={() => setInformation(false)}>
-                <View style={{flex:1, marginTop:20}}>
-                    <View style={{}}>
-                        <Image
-                            source={coverPhoto}
-                            style={styles.coverPhoto}
-                        />
-                        <TouchableOpacity style={[styles.Button, styles.FisrtRightButton]} onPress={() => setInformation(false)}>
-                            <ArrowIcon width={30} height={30} color="#1a1a1a" />
-                        </TouchableOpacity>
-                        <View style={styles.avatarContainer2}>
+                <View style={styles.middleContent}>
+                    <View style={styles.avatarContainer}>
+                        <TouchableOpacity onPress={() => setShowAvatarOptions(true)}>
                             <Avatar
-                                size={70}
+                                size={100}
                                 rounded={true}
                                 source={thumbnailAvatar ? { uri: thumbnailAvatar } : defaultAvatar}
                             />
-                            <Text style={{ alignSelf: 'center', marginLeft: 15, fontSize: 20, fontWeight: 'bold', color:'white' }}>{firstName} {lastName}</Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={styles.profileContainer}>
-                        <Text style={{ fontSize: 16 }}>Thông tin cá nhân</Text>
-                        <Text style={styles.profileText}>Giới tính:               {getGenderString()}</Text>
-                        <Text style={styles.profileText}>Ngày sinh:            {birthday}</Text>
-                        <View>
-                            <Text style={styles.profileText}>Điện thoại:           {phoneNumber}</Text>
-                        </View>
-                        <TouchableOpacity style={{
-                            width: 300,
-                            height: 30,
-                            borderRadius: 20,
-                            backgroundColor: '#009bf8',
-                            alignSelf: 'center',
-                            justifyContent: 'center',
-                            marginTop: 20,
-                            marginLeft: -15
-                        }} onPress={() => { navigation.navigate('DetailProfile', { data: data }), setMoreInfor(false), setInformation(false) }}>
-                            <Text style={{ alignSelf: 'center', fontSize: 16 }}>Chỉnh sửa</Text>
+                    <Text style={styles.username}>{firstName} {lastName}</Text>
+                    <View style={styles.ButtonContainer}>
+                        <TouchableOpacity style={[styles.photoButton, { marginLeft: -10 }]}>
+                            <Image
+                                source={require('../../assets/icon/img.png')}
+                                style={styles.icon}
+                            />
+                            <Text style={styles.buttonText}>Ảnh của tôi</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.photoButton, { marginLeft: 10 }]}>
+                            <Image
+                                source={require('../../assets/icon/archive.png')}
+                                style={styles.icon}
+                            />
+                            <Text style={styles.buttonText}>Kho Ảnh</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </Modal>
-        </ScrollView>
-        
+
+                <View style={styles.wallContainer}>
+                    <Text style={styles.wallText}>Đây là nhật ký của bạn!</Text>
+                </View>
+                <View style={{ alignItems: 'center' }} >
+                    <TouchableOpacity style={styles.postButton}>
+                        <Text style={styles.TextButton}>Đăng lên nhật ký</Text>
+                    </TouchableOpacity>
+                </View>
+
+                {/* ĐỔI AVATAR */}
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={showAvatarOptions}
+                    onRequestClose={() => setShowAvatarOptions(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.optionContainer}>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => { pickImage(true), setShowAvatarOptions(false) }}>
+                                <Text style={styles.optionText}>Đổi ảnh đại diện</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => setShowAvatarOptions(false)}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: 'red',
+                                }}>Hủy thao tác</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+                {/* -------------------------- */}
+                {/* ĐỔI BACKGROUND */}
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={showCoverOptions}
+                    onRequestClose={() => setShowCoverOptions(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.optionContainer}>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => { pickBackground(true), setShowCoverOptions(false) }}>
+                                <Text style={styles.optionText}>Đổi ảnh nền</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => setShowCoverOptions(false)}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: 'red',
+                                }}>Hủy thao tác</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+
+                {/* HIỆN RIGHT-NAV */}
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={showMoreInfor}
+                    onRequestClose={() => setMoreInfor(false)}
+                >
+                    <View style={styles.modalContainer2}>
+
+                        <View style={styles.optionContainer2}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: -25, marginTop: -5, paddingBottom: 20, color: '#1c70be' }}>{firstName} {lastName}</Text>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => {
+                                navigation.navigate("ViewProfile", { data: data }), setMoreInfor(false)
+                            }} >
+                                <Text style={styles.optionText}>Thông tin</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => { pickImage(true), setMoreInfor(false) }}>
+                                <Text style={styles.optionText}>Đổi ảnh đại diện</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => { pickBackground(true), setMoreInfor(false) }} >
+                                <Text style={styles.optionText}>Đổi ảnh nền</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton} >
+                                <Text style={styles.optionText}>Cập nhật giới thiệu bản thân</Text>
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={{ fontSize: 16, fontWeight: 'bold', marginLeft: -25, marginTop: 5, paddingBottom: 20, color: "#1c70be" }}>Cài đặt</Text>
+                            </View>
+                            <TouchableOpacity style={styles.optionButton} >
+                                <Text style={styles.optionText}>Quyền riêng tư</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton}>
+                                <Text style={styles.optionText}>Quản lý tài khoản</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton} >
+                                <Text style={styles.optionText}>Cài đặt chung</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => setMoreInfor(false)}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: 'red',
+                                }}>Quay về trang cá nhân</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionButton} onPress={() => handleLogout()} >
+                                <Text style={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: 'red',
+                                }}>Đăng xuất</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            </ScrollView>
+
         </View>
     );
 };
@@ -386,7 +392,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     photoButton: {
-        width:140,
+        width: 140,
         flexDirection: 'row',
         marginTop: 10,
         paddingVertical: 10,
@@ -395,7 +401,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderBlockColor: 'gray',
         borderWidth: 1,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     buttonText: {
         marginLeft: 2,
@@ -409,7 +415,7 @@ const styles = StyleSheet.create({
     wallText: {
         fontSize: 14,
         marginTop: -10,
-        marginLeft:10
+        marginLeft: 10
     },
     icon: {
         width: 30,
@@ -432,7 +438,7 @@ const styles = StyleSheet.create({
     modalContainer: {
         position: 'absolute',
         bottom: 0,
-        height: '33%',
+        height: '25%',
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
@@ -441,7 +447,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
     },
     modalContainer2: {
-        flex:1,
+        flex: 1,
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: 20,

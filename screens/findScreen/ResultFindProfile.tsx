@@ -10,27 +10,25 @@ const ResultFindProfile = ({ navigation, route }) => {
     const [firstName, setFirstName] = useState(data.firstName);
     const [lastName, setLastName] = useState(data.lastName); 
     const [birthday, setBirthday] = useState(data.birthday);
-    const [gender, setGender] = useState();
-    const [thumbnailAvatar, setThumbnailAvatar] = useState('');
+    const [gender, setGender] = useState(data.gender);
+    const [thumbnailAvatar, setThumbnailAvatar] = useState(data.thumbnailAvatar);
     const [showMoreInfor, setMoreInfor] = useState(false);
     const [showInformation, setInformation] = useState(false);
     const defaultAvatar = require('../../assets/profileTest/defaultAVT.jpg')
-    const [coverImg, setCoverImg] = useState();
+    const [coverImg, setCoverImg] = useState(data.coverImage);
     const [profileData, setProfileData] = useState(null);
-
-    console.log(data + "here")
     
     const getGenderString = () => {
         return gender ? 'Nam' : 'Nữ';
     }
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={[styles.container,{marginTop:40}]}>
             <Image
-                source={coverPhoto}
+                source={coverImg ? {uri : coverImg} : coverPhoto}
                 style={styles.coverPhoto}
             />
 
-            <TouchableOpacity style={[styles.Button, styles.FisrtRightButton]} onPress={()=> navigation.navigate('FindScreen')}>
+            <TouchableOpacity style={[styles.Button, styles.FisrtRightButton]} onPress={()=> navigation.goBack()}>
                 <ArrowIcon width={30} height={30} color="#1a1a1a" />
             </TouchableOpacity>
 
@@ -43,19 +41,17 @@ const ResultFindProfile = ({ navigation, route }) => {
 
             <View style={styles.middleContent}>
                 <View style={styles.avatarContainer}>
-                    <TouchableOpacity>
                         <Avatar
                             size={100}
                             rounded={true}
                             source={thumbnailAvatar ? { uri: thumbnailAvatar } : defaultAvatar}
                         />
-                    </TouchableOpacity>
                     <Text style={styles.username}>{firstName} {lastName}</Text>
                 </View>
 
               
                 <View style={styles.ButtonContainer}>
-                    <TouchableOpacity style={styles.postButton} onPress={()=> console.log(data)}>
+                    <TouchableOpacity style={styles.postButton}>
                         <Text style={styles.TextButton}>Nhắn tin</Text> 
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -82,7 +78,9 @@ const ResultFindProfile = ({ navigation, route }) => {
 
                     <View style={styles.optionContainer2}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: -25, marginTop: -5, paddingBottom: 20, color: '#1c70be' }}>{firstName} {lastName}</Text>
-                        <TouchableOpacity style={styles.optionButton} onPress={() => { setInformation(true) }} >
+                        <TouchableOpacity style={styles.optionButton} onPress={() => { setInformation(true)
+                            setMoreInfor(false)
+                         }} >
                             <Text style={styles.optionText}>Thông tin</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.optionButton}>
@@ -112,7 +110,7 @@ const ResultFindProfile = ({ navigation, route }) => {
                 visible={showInformation}
                 animationType="slide"
                 onRequestClose={() => setInformation(false)}>
-                <View>
+                <View style={{marginTop:30, flex:1}}>
                     <View>
                         <Image
                             source={coverPhoto}
@@ -267,6 +265,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        marginTop:40
     },
     optionContainer: {
         backgroundColor: '#fff',

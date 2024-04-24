@@ -11,7 +11,7 @@ import {
 import { sendChat, white } from "../../assets/colors";
 import { useState } from "react";
 import { Button } from "react-native-paper";
-import { formatTime } from "../../utils/format";
+import { formatTime, formatTimeMess } from "../../utils/format";
 import { ResizeMode, Video } from "expo-av";
 import ChildrenModalForwadMess from "./modalForwardMess";
 
@@ -54,47 +54,57 @@ const SendChat = ({ item, onDeleteMessage, onUnsentMessage }) => {
           >
             {item?.content}
           </Text>
+          <Text style={{ marginTop: 5, opacity: 0.3, fontSize: 12 }}>
+            {formatTimeMess(item?.createdAt)}
+          </Text>
         </View>
       )}
 
       {/* Hiển thị hình ảnh video nếu không phải unsend */}
       {item.status != "UNSEND" && (
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-          }}
-        >
-          {!(item.attachments == null) && (
-            <>
-              {[...item.attachments].map((item) => (
-                <View key={item.url}>
-                  {item.type === "IMAGE" ? (
-                    <View>
-                      <Image
-                        source={{ uri: item.url }}
-                        style={{
-                          width: 200,
-                          height: 200,
-                        }}
-                        resizeMode="contain"
-                      />
-                    </View>
-                  ) : (
-                    <TouchableOpacity>
-                      <Video
-                        source={{ uri: item.url }}
-                        style={{ width: 200, height: 200 }}
-                        useNativeControls={true}
-                        resizeMode={ResizeMode.CONTAIN}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </View>
-              ))}
-            </>
+        <>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            {!(item.attachments == null) && (
+              <>
+                {[...item.attachments].map((item) => (
+                  <View key={item.url}>
+                    {item.type === "IMAGE" ? (
+                      <View>
+                        <Image
+                          source={{ uri: item.url }}
+                          style={{
+                            width: 200,
+                            height: 200,
+                          }}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    ) : (
+                      <TouchableOpacity>
+                        <Video
+                          source={{ uri: item.url }}
+                          style={{ width: 200, height: 200 }}
+                          useNativeControls={true}
+                          resizeMode={ResizeMode.CONTAIN}
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                ))}
+              </>
+            )}
+          </View>
+          {item.content === "" && (
+            <Text style={{ marginTop: 5, opacity: 0.3, fontSize: 12 }}>
+              {formatTimeMess(item?.createdAt)}
+            </Text>
           )}
-        </View>
+        </>
       )}
       {/* Modal ooption */}
       <Modal

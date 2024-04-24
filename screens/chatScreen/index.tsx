@@ -29,42 +29,55 @@ import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import http, { ip } from "../../utils/http";
 import axios from "axios";
-import { connectSocket } from "../../utils/socket";
+import { connectSocket, disconnectSocket } from "../../utils/socket";
 let stompClient = null;
-let isConnected = false;
-const ChatScreen = ({navigation, route }) => {
+
+const ChatScreen = ({ navigation, route }) => {
   const { chatRoom } = route.params;
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
   const userID = queryClient.getQueryData(["profile"])["id"];
   const [messages, setMessages] = useState([]);
+  const [isConnected, setIsConnected] = useState(false);
 
-  useEffect(() => {
-  }, []);
   const getChatRoom = useQuery({
-    queryKey: ["chatRoom", chatRoom.id],
+    queryKey: ["chatRoom", chatRoom?.id],
     queryFn: () =>
-      getChatRoomApi(token, chatRoom.id)
+      getChatRoomApi(token, chatRoom?.id)
         .then((res) => {
           setMessages([...res.data].reverse());
           return res.data;
         })
         .catch((err) => console.log(err["response"])),
   });
-  
+
   // socket
   const [chat, setChat] = useState({
-    chatId: chatRoom.id,
+    chatId: chatRoom?.id,
     content: "",
     sender: userID,
     connected: false,
   });
   useEffect(() => {
-    const fetchData = async () => {
-      // Kết nối với máy chủ WebSocket khi component được mount
+    const fetchDataAndConnect = async () => {
       try {
-        stompClient = await connectSocket();
-        await stompClient.connect({}, onConnected);
+        console.log("connectSocket", "connectSocket");
+        console.log("stompClient", stompClient);
+        if (stompClient== null) {
+          stompClient = await connectSocket();
+          
+          try {
+            await stompClient.connect({}, async () => {
+              console.log("connect", "connect");
+              await stompClient.subscribe(
+                "/chatroom/" + chat?.chatId, 
+                onPrivateMessageReceived
+              );
+            });
+          } catch (error) {
+            throw new Error("Socket connection error");
+          }
+        }
       } catch (error) {
         console.error("Socket connection error:", error);
       }
@@ -72,25 +85,27 @@ const ChatScreen = ({navigation, route }) => {
         queryKey: ["chatRoom", chatRoom.id],
       });
     };
-
-    fetchData();
-
+    console.log("fetchDataAndConnect", "fetchDataAndConnect");
+    fetchDataAndConnect();
+  
     return () => {
-      queryClient.invalidateQueries({ queryKey: ["getListChatRoom"] });
+      if (stompClient) {
+        disconnectSocket();
+        stompClient = null;
+        setChat({ ...chat, connected: false });
+      }
     };
   }, []);
- 
-  const onConnected = async () => {
-    setChat({ ...chat, connected: true });
-    await stompClient.subscribe("/chatroom/" + chat.chatId, onPrivateMessageReceived);
-  };
+  
   const onPrivateMessageReceived = async (payload) => {
+    console.log("onPrivateMessageReceived", "payload");
     const data = (await JSON.parse(payload.body)) as any;
-    await setMessages((prevMessages) => {
+    console.log("onPrivateMessageReceived", data);
+    setMessages((prevMessages) => {
       const messageIndex = prevMessages.findIndex(
         (message) => message.messageId === data.messageId
       );
-
+      
       if (messageIndex !== -1) {
         const updatedMessages = [...prevMessages];
         updatedMessages[messageIndex] = data;
@@ -131,14 +146,15 @@ const ChatScreen = ({navigation, route }) => {
   };
 
   const handleDeleteMessage = async (messageId) => {
-    const res = await deleteMessageApi(token, chatRoom.id, messageId);
-    if (res.status != 200) {
-      Alert.alert("Error", res.data.detail);
-      return;
-    }
-    setMessages((prevMessages) =>
-      prevMessages.filter((message) => message.messageId !== messageId)
-    );
+    console.log("delete message", chat.connected);
+    // const res = await deleteMessageApi(token, chatRoom.id, messageId);
+    // if (res.status != 200) {
+    //   Alert.alert("Error", res.data.detail);
+    //   return;
+    // }
+    // setMessages((prevMessages) =>
+    //   prevMessages.filter((message) => message.messageId !== messageId)
+    // );
   };
   const handleUnsentMessage = async (messageId) => {
     const res = await unsentMessageApi(token, chatRoom.id, messageId);
@@ -174,7 +190,7 @@ const ChatScreen = ({navigation, route }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View style={styles.header}>
-        <HeaderChat item={chatRoom} navigation={navigation}/>
+        <HeaderChat item={chatRoom} navigation={navigation} />
       </View>
 
       <ScrollView style={styles.bodyChat}>
@@ -192,7 +208,7 @@ const ChatScreen = ({navigation, route }) => {
                 />
               );
             } else {
-              if ( item.sender.id ==  messages[index + 1]?.sender.id)
+              if (item.sender.id == messages[index + 1]?.sender.id)
                 return (
                   <ReceiveChat
                     key={item.messageId}

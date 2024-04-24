@@ -1,6 +1,10 @@
 import { NavigationContainer, CommonActions } from "@react-navigation/native";
 import Route from "./router/route";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQueryClient,
+} from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { Input } from "@rneui/themed/dist/Input";
 import InputChat from "./screens/chatScreen/inputChat";
@@ -16,10 +20,6 @@ const App = () => {
       },
     },
   });
-  const abc = (text: string) => {
-    console.log(text);
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}

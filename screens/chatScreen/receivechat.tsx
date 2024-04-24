@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { Button } from "react-native-paper";
 import { ResizeMode, Video } from "expo-av";
 import ChildrenModalForwadMess from "./modalForwardMess";
+import { formatTimeMess } from "../../utils/format";
 
 const ReceiveChat = ({ item, isSameUser, onDeleteMessage }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -57,6 +58,9 @@ const ReceiveChat = ({ item, isSameUser, onDeleteMessage }) => {
         {/* text */}
         {item.content !== "" && (
           <View style={[styles.container, { maxWidth: "70%" }]}>
+            <Text style={{ marginBottom: 5, opacity: 0.3 }}>
+              {item?.sender?.firstName + " " + item?.sender?.lastName}
+            </Text>
             <Text
               style={
                 item.status == "UNSEND"
@@ -66,42 +70,52 @@ const ReceiveChat = ({ item, isSameUser, onDeleteMessage }) => {
             >
               {item?.content}
             </Text>
+            <Text style={{ marginTop: 5, opacity: 0.3, fontSize:12 }}>
+              {formatTimeMess(item?.createdAt)}
+            </Text>
           </View>
         )}
       </View>
 
       {/* Hiển thị hình ảnh video nếu không phải unsend */}
       {item.status != "UNSEND" && (
-        <View
-          style={{ flexDirection: "row", flexWrap: "wrap", marginLeft: "7%" }}
-        >
-          {!(item.attachments == null) && (
-            <>
-              {[...item.attachments].map((item) => (
-                <View key={item.url}>
-                  {item.type === "IMAGE" ? (
-                    <TouchableOpacity>
-                      <Image
-                        source={{ uri: item.url }}
-                        style={{ width: 200, height: 200 }}
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity>
-                      <Video
-                        source={{ uri: item.url }}
-                        style={{ width: 200, height: 200 }}
-                        useNativeControls={true}
-                        resizeMode={ResizeMode.CONTAIN}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </View>
-              ))}
-            </>
+        <>
+          {item.content === "" && (
+            <Text style={{ marginBottom: 5, opacity: 0.3 }}>
+              {item?.sender?.firstName + " " + item?.sender?.lastName}
+            </Text>
           )}
-        </View>
+          <View
+            style={{ flexDirection: "row", flexWrap: "wrap", marginLeft: "7%" }}
+          >
+            {!(item.attachments == null) && (
+              <>
+                {[...item.attachments].map((item) => (
+                  <View key={item.url}>
+                    {item.type === "IMAGE" ? (
+                      <TouchableOpacity>
+                        <Image
+                          source={{ uri: item.url }}
+                          style={{ width: 200, height: 200 }}
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity>
+                        <Video
+                          source={{ uri: item.url }}
+                          style={{ width: 200, height: 200 }}
+                          useNativeControls={true}
+                          resizeMode={ResizeMode.CONTAIN}
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                ))}
+              </>
+            )}
+          </View>
+        </>
       )}
       {/* Modal ooption */}
       <Modal

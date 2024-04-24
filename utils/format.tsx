@@ -21,3 +21,12 @@ export const formatTime = (dateString: string) => {
     return `${minutes} phút`;
   }
 };
+
+
+export const formatTimeMess = (dateString: string)=>{
+const date = new Date(dateString);
+
+const formattedDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+return formattedDate
+}

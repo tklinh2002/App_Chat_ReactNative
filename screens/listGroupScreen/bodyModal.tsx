@@ -74,7 +74,7 @@ const BodyModal = ({ setListItem, navigation }) => {
       </View>
       <SectionList
         sections={sections}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item?.profile?.id}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>{title}</Text>
