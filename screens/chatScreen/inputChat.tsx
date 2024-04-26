@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Text,
 } from "react-native";
 
 import { backgroundHeader, white } from "../../assets/colors";
@@ -17,6 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 import { ResizeMode, Video } from "expo-av";
 import IconEntypo from "react-native-vector-icons/Entypo";
 import * as DocumentPicker from "expo-document-picker";
+import IconAntDesign from "react-native-vector-icons/AntDesign";
 const InputChat = ({ onSendMessage }) => {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => {
@@ -27,9 +29,12 @@ const InputChat = ({ onSendMessage }) => {
   };
   const handSendText = async () => {
     // console.log(media);
-    onSendMessage(text, media);
+    // onSendMessage(text, media);
+    // setText("");
     setMedia([]);
-    setText("");
+    setDocument([]);
+
+
   };
   const [text, setText] = useState("");
   const inputStyle = isFocused ? styles.focusedInput : styles.defaultInput;
@@ -39,6 +44,7 @@ const InputChat = ({ onSendMessage }) => {
     : styles.inputIncludeText;
   // pick media
   const [media, setMedia] = useState([]);
+  const [document, setDocument] = useState([]);
   // useLibrary : true -> pick image from library, false -> pick image from camera
   const pickImage = async (useLibrary) => {
     let result = null;
@@ -73,43 +79,78 @@ const InputChat = ({ onSendMessage }) => {
       let result = await DocumentPicker.getDocumentAsync({
         type: "*/*",
         copyToCacheDirectory: false,
+        multiple: true,
       });
 
       if (!result.canceled) {
-        console.log(result.assets[0].file?.arrayBuffer());
+        const newDocument = result.assets.filter((item) => {
+          return !document.some(
+            (documentItem) => documentItem.name === item.name
+          );
+        });
+        setDocument([...document, ...newDocument]);
       }
-    } catch (error) {}
+    } catch (error) {
+      throw new Error("Error when pick document");
+    }
   };
 
   const handleDeteleMedia = (fileName) => () => {
     const newMedia = media.filter((item) => item.fileName !== fileName);
     setMedia(newMedia);
   };
+  const handleDeteleDocument = (fileName) => () => {
+    const newDocument = document.filter((item) => item.name !== fileName);
+    setDocument(newDocument);
+  };
   return (
     <View style={{ backgroundColor: "white" }}>
       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-        {media.map((item) => (
-          <View key={item.uri}>
-            {item.type === "image" ? (
-              <TouchableOpacity onPress={handleDeteleMedia(item.fileName)}>
-                <Image
-                  source={{ uri: item.uri }}
-                  style={{ width: 70, height: 70, margin: 5 }}
-                  resizeMode="cover"
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={handleDeteleMedia(item.fileName)}>
-                <Video
-                  source={{ uri: item.uri }}
-                  style={{ width: 70, height: 70 }}
-                  useNativeControls={true}
-                  resizeMode={ResizeMode.CONTAIN}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-        ))}
+        {media.length > 0 && (
+          <>
+            {media.map((item) => (
+              <View key={item.uri}>
+                {item.type === "image" ? (
+                  <TouchableOpacity onPress={handleDeteleMedia(item.fileName)}>
+                    <Image
+                      source={{ uri: item.uri }}
+                      style={{ width: 70, height: 70, margin: 5 }}
+                      resizeMode="cover"
+                    />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity onPress={handleDeteleMedia(item.fileName)}>
+                    <Video
+                      source={{ uri: item.uri }}
+                      style={{ width: 70, height: 70 }}
+                      useNativeControls={true}
+                      resizeMode={ResizeMode.CONTAIN}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            ))}
+          </>
+        )}
+
+        {/* document */}
+        {document.length > 0 && (
+          <>
+            {document.map((item) => (
+              <View key={item.uri}>
+                <TouchableOpacity
+                  style={{ width: 60, height: 80, margin: 5, alignItems: "center"}}
+                  onPress={handleDeteleDocument(item.name)}
+                >
+                  <IconAntDesign name="file1" size={45} />
+                  <Text style={{ fontSize: 10 }} numberOfLines={2}>
+                    {item.name}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </>
+        )}
       </View>
       {/* <Image source={require("../../assets/images/images.jpg")} /> */}
 
@@ -156,7 +197,10 @@ const InputChat = ({ onSendMessage }) => {
             </>
           ) : (
             <>
-              <TouchableOpacity onPress={handSendText} style={{ marginRight: 10 }}>
+              <TouchableOpacity
+                onPress={handSendText}
+                style={{ marginRight: 10 }}
+              >
                 <IconFeather name="send" color={backgroundHeader} size={25} />
               </TouchableOpacity>
               <TouchableOpacity

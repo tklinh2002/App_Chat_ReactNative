@@ -21,17 +21,17 @@ const App = () => {
     },
   });
   return (
-    <QueryClientProvider client={queryClient}>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-      <NavigationContainer>
-        <Route />
-      </NavigationContainer>
-    </QueryClientProvider>
-    // <View
-    //   style={{ flex: 1, justifyContent: "center", backgroundColor: "gray" }}
-    // >
-    //   <InputChat onSendMessage={abc} />
-    // </View>
+    // <QueryClientProvider client={queryClient}>
+    //   {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+    //   <NavigationContainer>
+    //     <Route />
+    //   </NavigationContainer>
+    // </QueryClientProvider>
+    <View
+      style={{ flex: 1, justifyContent: "center", backgroundColor: "gray" }}
+    >
+      <InputChat onSendMessage={"abc"} />
+    </View>
     // <OptionChatGroup navigation={navigator}/>
   );
 };

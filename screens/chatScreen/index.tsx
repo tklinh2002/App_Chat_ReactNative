@@ -63,14 +63,14 @@ const ChatScreen = ({ navigation, route }) => {
       try {
         console.log("connectSocket", "connectSocket");
         console.log("stompClient", stompClient);
-        if (stompClient== null) {
+        if (stompClient == null) {
           stompClient = await connectSocket();
-          
+
           try {
             await stompClient.connect({}, async () => {
               console.log("connect", "connect");
               await stompClient.subscribe(
-                "/chatroom/" + chat?.chatId, 
+                "/chatroom/" + chat?.chatId,
                 onPrivateMessageReceived
               );
             });
@@ -87,7 +87,7 @@ const ChatScreen = ({ navigation, route }) => {
     };
     console.log("fetchDataAndConnect", "fetchDataAndConnect");
     fetchDataAndConnect();
-  
+
     return () => {
       if (stompClient) {
         disconnectSocket();
@@ -96,7 +96,7 @@ const ChatScreen = ({ navigation, route }) => {
       }
     };
   }, []);
-  
+
   const onPrivateMessageReceived = async (payload) => {
     console.log("onPrivateMessageReceived", "payload");
     const data = (await JSON.parse(payload.body)) as any;
@@ -105,7 +105,7 @@ const ChatScreen = ({ navigation, route }) => {
       const messageIndex = prevMessages.findIndex(
         (message) => message.messageId === data.messageId
       );
-      
+
       if (messageIndex !== -1) {
         const updatedMessages = [...prevMessages];
         updatedMessages[messageIndex] = data;
@@ -146,36 +146,36 @@ const ChatScreen = ({ navigation, route }) => {
   };
 
   const handleDeleteMessage = async (messageId) => {
-    console.log("delete message", chat.connected);
-    // const res = await deleteMessageApi(token, chatRoom.id, messageId);
-    // if (res.status != 200) {
-    //   Alert.alert("Error", res.data.detail);
-    //   return;
-    // }
-    // setMessages((prevMessages) =>
-    //   prevMessages.filter((message) => message.messageId !== messageId)
-    // );
+    // console.log("delete message", chat.connected);
+    const res = await deleteMessageApi(token, chatRoom.id, messageId);
+    if (res.status != 200) {
+      Alert.alert("Error", res.data.detail);
+      return;
+    }
+    setMessages((prevMessages) =>
+      prevMessages.filter((message) => message.messageId !== messageId)
+    );
   };
   const handleUnsentMessage = async (messageId) => {
     const res = await unsentMessageApi(token, chatRoom.id, messageId);
-    if (res.status === 200) {
-      setMessages((prevMessages) => {
-        // Find the index of the message with the given messageId
-        const messageIndex = prevMessages.findIndex(
-          (message) => message.messageId === messageId
-        );
+    // if (res.status === 200) {
+    //   setMessages((prevMessages) => {
+    //     // Find the index of the message with the given messageId
+    //     const messageIndex = prevMessages.findIndex(
+    //       (message) => message.messageId === messageId
+    //     );
 
-        // If the message with the given messageId is found, update it
-        if (messageIndex !== -1) {
-          const updatedMessages = [...prevMessages];
-          updatedMessages[messageIndex] = res.data;
-          return updatedMessages;
-        } else {
-          // If the message with the given messageId is not found, add it to the end of the array
-          return [...prevMessages, res.data];
-        }
-      });
-    }
+    //     // If the message with the given messageId is found, update it
+    //     if (messageIndex !== -1) {
+    //       const updatedMessages = [...prevMessages];
+    //       updatedMessages[messageIndex] = res.data;
+    //       return updatedMessages;
+    //     } else {
+    //       // If the message with the given messageId is not found, add it to the end of the array
+    //       return [...prevMessages, res.data];
+    //     }
+    //   });
+    // }
   };
   //
   if (getChatRoom.isLoading)

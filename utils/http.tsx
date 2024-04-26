@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-export const ip = "192.168.101.5"
+export const ip = "10.88.54.41"
 class Http {
   private static instance: AxiosInstance;
   
