@@ -6,8 +6,7 @@ const styles = StyleSheet.create({
   },
   bodyChat: {
     backgroundColor: backgroundChat,
-    transform: [{ scaleY: -1 }]
-
+    transform: [{ scaleY: -1 }],
   },
   header: {
     backgroundColor: backgroundHeader,

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   Alert,
+  TouchableWithoutFeedback,
 } from "react-native";
 import Header from "../components/headerFind";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -16,6 +17,7 @@ import IconAntDesign from "react-native-vector-icons/AntDesign";
 import { Avatar } from "react-native-elements";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import IconFeather from "react-native-vector-icons/Feather";
+import IconFontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import {
   addMemberToGroupApi,
   deleteMemberInGroupApi,
@@ -29,6 +31,7 @@ import * as ImagePicker from "expo-image-picker";
 import { sendFriendRequestApi } from "../../apis/user.api";
 import { CheckBox } from "@rneui/themed";
 import { useFocusEffect } from "@react-navigation/native";
+import { useGroup } from "../../hook/hook";
 const OptionChatGroup = ({ route }) => {
   const { item } = route.params;
   const id = item.groupId;
@@ -44,9 +47,12 @@ const OptionChatGroup = ({ route }) => {
   const [modalListMember, setModalListMember] = useState(false);
   const [modalAddUser, setModalAddUser] = useState(false);
   const [modalRemoveUser, setModalRemoveUser] = useState(false);
+  const [modalchangeRole, setModalChangeRole] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectUser, setSelectUser] = useState(null);
   // State để lưu trữ trạng thái kiểm tra của từng thành viên
   const [checkedItems, setCheckedItems] = useState({});
-
+  const { changeRoleMemberInGroup } = useGroup();
   // Hàm xử lý sự kiện khi checkbox được thay đổi
   const handleCheckChange = (id) => {
     setCheckedItems((prevState) => ({
@@ -206,7 +212,7 @@ const OptionChatGroup = ({ route }) => {
         {
           text: "Đồng ý",
           onPress: async () => {
-            const listRemoveUser =  Object.keys(checkedItems).filter(
+            const listRemoveUser = Object.keys(checkedItems).filter(
               (key) => checkedItems[key]
             );
             listRemoveUser.forEach(async (item) => {
@@ -256,6 +262,20 @@ const OptionChatGroup = ({ route }) => {
       { cancelable: true }
     );
   };
+  const handleChangeRole = async (memberid, role) => {
+    await changeRoleMemberInGroup
+      .mutateAsync({ groupid: id, memberid, role })
+      .then(
+        (res) => {
+          alert("Thay đổi role thành công");
+          setModalChangeRole(false);
+        },
+        (err) => {
+          alert(err.response.data.detail);
+        }
+      );
+    await getlistMember.refetch();
+  };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.containerHeader}>
@@ -301,7 +321,7 @@ const OptionChatGroup = ({ route }) => {
           style={styles.objectList}
           onPress={() => {
             setCheckedItems({});
-            setModalAddUser(true)
+            setModalAddUser(true);
           }}
         >
           <IconAntDesign name="adduser" color="black" size={25} />
@@ -314,20 +334,29 @@ const OptionChatGroup = ({ route }) => {
               style={styles.objectList}
               onPress={() => {
                 setCheckedItems({});
-                setModalRemoveUser(true)
+                setModalRemoveUser(true);
               }}
             >
               <IconAntDesign name="adduser" color="black" size={25} />
               <Text style={styles.text}>{"Xóa thành viên khỏi nhóm"}</Text>
             </TouchableOpacity>
             {role === "GROUP_LEADER" ? (
-              <TouchableOpacity
-                style={styles.objectList}
-                onPress={handleDeleteGroup}
-              >
-                <IconSimpleLineIcons name="trash" color="black" size={25} />
-                <Text style={styles.text}>{"Giải tán nhóm"}</Text>
-              </TouchableOpacity>
+              <>
+                <TouchableOpacity
+                  style={styles.objectList}
+                  onPress={() => setModalChangeRole(true)}
+                >
+                  <IconFontAwesome5 name="user-edit" color="black" size={25} />
+                  <Text style={styles.text}>{"Thay đổi role"}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.objectList}
+                  onPress={handleDeleteGroup}
+                >
+                  <IconSimpleLineIcons name="trash" color="black" size={25} />
+                  <Text style={styles.text}>{"Giải tán nhóm"}</Text>
+                </TouchableOpacity>
+              </>
             ) : null}
           </>
         ) : null}
@@ -576,7 +605,10 @@ const OptionChatGroup = ({ route }) => {
                   // Filter based on the search text
                   const fullName =
                     `${item.profile.firstName} ${item.profile.lastName}`.toLowerCase();
-                  return fullName.includes(searchText.toLowerCase()) && item.role === "MEMBER";
+                  return (
+                    fullName.includes(searchText.toLowerCase()) &&
+                    item.role === "MEMBER"
+                  );
                 })
                 .map((item) => (
                   <TouchableOpacity
@@ -613,6 +645,141 @@ const OptionChatGroup = ({ route }) => {
               Xóa thành viên khỏi nhóm
             </Button>
           </View>
+        </View>
+      </Modal>
+      {/* Modal change role thành viên */}
+      <Modal visible={modalchangeRole} transparent={true} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            justifyContent: "center",
+          }}
+        >
+          <View
+            style={{
+              marginTop: 50,
+              justifyContent: "center",
+              backgroundColor: "white",
+              flex: 1,
+              padding: 10,
+              paddingBottom: 20,
+            }}
+          >
+            <IconFeather
+              name="x"
+              color="black"
+              size={25}
+              onPress={() => setModalChangeRole(false)}
+            />
+            <Text style={{ fontSize: 20, textAlign: "center" }}>
+              Danh sách thành viên
+            </Text>
+            <TextInput
+              placeholder="Tìm kiếm"
+              mode="outlined"
+              style={{ backgroundColor: "white" }}
+              value={searchText}
+              onChangeText={setSearchText}
+            />
+            <ScrollView>
+              {listMember
+                .filter((item) => {
+                  // Filter based on the search text
+                  const fullName =
+                    `${item.profile.firstName} ${item.profile.lastName}`.toLowerCase();
+                  return (
+                    fullName.includes(searchText.toLowerCase()) &&
+                    item?.role != "GROUP_LEADER"
+                  );
+                })
+                .map((item) => (
+                  <TouchableOpacity
+                    key={item?.profile?.id}
+                    style={styles.object}
+                    onPress={async () => {
+                      console.log(item);
+                      await setSelectUser(item);
+                      setModalVisible(true);
+                    }}
+                    // onpress chuyển đến trang thông tin cá nhân
+                  >
+                    <Avatar
+                      size="medium"
+                      rounded
+                      title={item.profile.lastName[0]}
+                      source={{ uri: item.profile.thumbnailAvatar }}
+                    />
+                    <View style={{ marginLeft: 10 }}>
+                      {/* thay đổi tên  */}
+                      <Text style={{ fontWeight: "bold", fontSize: 15 }}>
+                        {item.profile.firstName + " " + item.profile.lastName}
+                      </Text>
+                      <Text style={{ fontSize: 12 }}>
+                        {item?.role === "GROUP_LEADER"
+                          ? "Nhóm trưởng"
+                          : item?.role === "DEPUTY_GROUP_LEADER"
+                          ? "Nhóm phó"
+                          : "Thành viên"}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+            </ScrollView>
+          </View>
+          {/* modal chon setRole */}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                    Chọn role cho{" "}
+                    {selectUser?.profile?.firstName + " " + selectUser?.profile?.lastName}
+                  </Text>
+                  {selectUser?.role == "MEMBER" ? (
+                    <Button
+                      style={{ margin: 10 }}
+                      mode="contained"
+                      onPress={() => {
+                        handleChangeRole(
+                          selectUser?.profile?.id,
+                          "DEPUTY_GROUP_LEADER"
+                        );
+                        setModalVisible(false);
+                      }}
+                    >
+                      Nhóm phó
+                    </Button>
+                  ) : (
+                    <Button
+                      mode="contained"
+                      onPress={() => {
+                        handleChangeRole(selectUser?.profile?.id, "MEMBER");
+                        setModalVisible(false);
+                      }}
+                    >
+                      Thành viên
+                    </Button>
+                  )}
+                  <Button
+                    mode="contained"
+                    onPress={() => {
+                      handleChangeRole(selectUser?.profile?.id, "GROUP_LEADER");
+                      setModalVisible(false);
+                      setSelectUser(null);
+                    }}
+                  >
+                    Nhóm trưởng
+                  </Button>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
         </View>
       </Modal>
     </ScrollView>
@@ -667,6 +834,18 @@ const styles = StyleSheet.create({
     height: 80,
     borderBottomWidth: 0.2,
     flexDirection: "row",
+    alignItems: "center",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
     alignItems: "center",
   },
 });

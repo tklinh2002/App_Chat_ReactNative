@@ -81,3 +81,25 @@ export const deleteMemberInGroupApi = (token, groupid, memberid) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// rời khỏi nhóm
+export const leaveGroupApi = (token, groupid) => {
+  return http.put(
+    `/v1/users/profile/groups/${groupid}/leave`,
+    {},
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
+
+// thay đổi quyền thành viên trong nhóm
+export const changeRoleMemberInGroupApi = (token, groupid, memberid, role) => {
+  return http.put(
+    `/v1/groups/${groupid}/members/${memberid}`,
+    { role },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};

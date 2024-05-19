@@ -42,6 +42,8 @@ const ReceiveInvite = () => {
     const res = await acceptFriendApi(token, id)
       .then(async (res) => {
         await queryClient.invalidateQueries({ queryKey: ["getListChatRoom"] });
+        await queryClient.invalidateQueries({ queryKey: ["getListContact", "friend"] });
+        await queryClient.invalidateQueries({ queryKey: ["getListContact", "request"] });
         await Alert.alert("Thông báo", res.data);
         setContacts(prevContacts => prevContacts.filter(item => item.profile.id !== id));
       })

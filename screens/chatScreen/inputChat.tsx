@@ -29,12 +29,10 @@ const InputChat = ({ onSendMessage }) => {
   };
   const handSendText = async () => {
     // console.log(media);
-    // onSendMessage(text, media);
-    // setText("");
+    onSendMessage(text, media, document);
+    setText("");
     setMedia([]);
     setDocument([]);
-
-
   };
   const [text, setText] = useState("");
   const inputStyle = isFocused ? styles.focusedInput : styles.defaultInput;
@@ -78,8 +76,9 @@ const InputChat = ({ onSendMessage }) => {
     try {
       let result = await DocumentPicker.getDocumentAsync({
         type: "*/*",
-        copyToCacheDirectory: false,
+        copyToCacheDirectory: true,
         multiple: true,
+
       });
 
       if (!result.canceled) {
@@ -139,7 +138,12 @@ const InputChat = ({ onSendMessage }) => {
             {document.map((item) => (
               <View key={item.uri}>
                 <TouchableOpacity
-                  style={{ width: 60, height: 80, margin: 5, alignItems: "center"}}
+                  style={{
+                    width: 60,
+                    height: 80,
+                    margin: 5,
+                    alignItems: "center",
+                  }}
                   onPress={handleDeteleDocument(item.name)}
                 >
                   <IconAntDesign name="file1" size={45} />
@@ -165,62 +169,174 @@ const InputChat = ({ onSendMessage }) => {
           }}
           value={text}
           multiline={true} // Enable multiline
-          numberOfLines={2}
           scrollEnabled={true} // Enable scrolling
         />
         <View style={[styles.inputIcon]}>
           {text === "" ? (
             <>
               {media.length > 0 && (
-                <TouchableOpacity onPress={handSendText}>
-                  <IconFeather name="send" color={backgroundHeader} size={25} />
-                </TouchableOpacity>
+                <>
+                  <TouchableOpacity onPress={handSendText}>
+                    <IconFeather
+                      name="send"
+                      color={backgroundHeader}
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => pickImage(false)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconIonicons name="camera" color="black" size={25} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => pickImage(true)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconSimpleLineIcons
+                      name="picture"
+                      color="black"
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                </>
               )}
-              <TouchableOpacity
-                onPress={pickDocument}
-                style={{ marginRight: 10 }}
-              >
-                <IconEntypo name="attachment" color="black" size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => pickImage(false)}
-                style={{ marginRight: 10 }}
-              >
-                <IconIonicons name="camera" color="black" size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => pickImage(true)}
-                style={{ marginRight: 10 }}
-              >
-                <IconSimpleLineIcons name="picture" color="black" size={25} />
-              </TouchableOpacity>
+              {document.length > 0 && (
+                <>
+                  <TouchableOpacity onPress={handSendText}>
+                    <IconFeather
+                      name="send"
+                      color={backgroundHeader}
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={pickDocument}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconEntypo name="attachment" color="black" size={25} />
+                  </TouchableOpacity>
+                </>
+              )}
+              {media.length === 0 && document.length === 0 && (
+                <>
+                  <TouchableOpacity
+                    onPress={handSendText}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconFeather
+                      name="send"
+                      color={backgroundHeader}
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={pickDocument}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconEntypo name="attachment" color="black" size={25} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => pickImage(false)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconIonicons name="camera" color="black" size={25} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => pickImage(true)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconSimpleLineIcons
+                      name="picture"
+                      color="black"
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                </>
+              )}
             </>
           ) : (
             <>
-              <TouchableOpacity
-                onPress={handSendText}
-                style={{ marginRight: 10 }}
-              >
-                <IconFeather name="send" color={backgroundHeader} size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={pickDocument}
-                style={{ marginRight: 10 }}
-              >
-                <IconEntypo name="attachment" color="black" size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => pickImage(false)}
-                style={{ marginRight: 10 }}
-              >
-                <IconIonicons name="camera" color="black" size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => pickImage(true)}
-                style={{ marginRight: 10 }}
-              >
-                <IconSimpleLineIcons name="picture" color="black" size={25} />
-              </TouchableOpacity>
+              {media.length > 0 && (
+                <>
+                  <TouchableOpacity onPress={handSendText}>
+                    <IconFeather
+                      name="send"
+                      color={backgroundHeader}
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => pickImage(false)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconIonicons name="camera" color="black" size={25} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => pickImage(true)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconSimpleLineIcons
+                      name="picture"
+                      color="black"
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                </>
+              )}
+              {document.length > 0 && (
+                <>
+                  <TouchableOpacity onPress={handSendText}>
+                    <IconFeather
+                      name="send"
+                      color={backgroundHeader}
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={pickDocument}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconEntypo name="attachment" color="black" size={25} />
+                  </TouchableOpacity>
+                </>
+              )}
+              {media.length === 0 && document.length === 0 && (
+                <>
+                  <TouchableOpacity
+                    onPress={handSendText}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconFeather
+                      name="send"
+                      color={backgroundHeader}
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={pickDocument}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconEntypo name="attachment" color="black" size={25} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => pickImage(false)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconIonicons name="camera" color="black" size={25} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => pickImage(true)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <IconSimpleLineIcons
+                      name="picture"
+                      color="black"
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                </>
+              )}
             </>
           )}
         </View>

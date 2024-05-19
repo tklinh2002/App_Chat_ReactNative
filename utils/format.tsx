@@ -24,9 +24,13 @@ export const formatTime = (dateString: string) => {
 
 
 export const formatTimeMess = (dateString: string)=>{
-const date = new Date(dateString);
-
-const formattedDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+const  date = dateString.split(" ")
+const hours = date[1].split(":")[0]
+const minutes = date[1].split(":")[1]
+const day = date[0].split("-")[0]
+const month = date[0].split("-")[1]
+const year = date[0].split("-")[2].slice(2,4)
+const formattedDate = `${hours}:${minutes} ${day}/${month}/${year}`;
 
 return formattedDate
 }

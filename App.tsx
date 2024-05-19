@@ -8,30 +8,30 @@ import {
 import React, { useEffect } from "react";
 import { Input } from "@rneui/themed/dist/Input";
 import InputChat from "./screens/chatScreen/inputChat";
-import { View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import { connectSocket } from "./utils/socket";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import OptionChatGroup from "./screens/optionScreen/optionChatGroup";
+import IconEntypo from "react-native-vector-icons/Entypo";
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         staleTime: 1000 * 60 * 60,
+        gcTime: 1000 * 60 * 60,
       },
     },
   });
   return (
-    // <QueryClientProvider client={queryClient}>
-    //   {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-    //   <NavigationContainer>
-    //     <Route />
-    //   </NavigationContainer>
-    // </QueryClientProvider>
-    <View
-      style={{ flex: 1, justifyContent: "center", backgroundColor: "gray" }}
-    >
-      <InputChat onSendMessage={"abc"} />
-    </View>
+    <QueryClientProvider client={queryClient}>
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <NavigationContainer>
+        <Route />
+      </NavigationContainer>
+    </QueryClientProvider>
+    // <View style={{ flex: 1, justifyContent: "center" }}>
+    //   <InputChat onSendMessage={"abc"} />
+    // </View>
     // <OptionChatGroup navigation={navigator}/>
   );
 };
