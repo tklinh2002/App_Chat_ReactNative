@@ -5,14 +5,15 @@ import { useNavigation } from "@react-navigation/native";
 import { backgroundHeader } from "../../assets/colors";
 import { useQueryClient } from "@tanstack/react-query";
 import { connectSocket } from "../../utils/socket";
+import { useSocket } from "../../hook/hook";
 
 const Header = () => {
   const queryClient = useQueryClient();
   const navigation = useNavigation();
+  const { isLoading: isLoadingSocket, stompClient, disconnect } = useSocket()
   const handLogOut = async () => {
+    disconnect();
     await queryClient.clear();
-    const stompj = await connectSocket();
-    await stompj.disconnect();
     navigation.reset({
       index: 0,
       routes: [{ name: "Home" as never }],

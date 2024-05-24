@@ -103,3 +103,20 @@ export const changeRoleMemberInGroupApi = (token, groupid, memberid, role) => {
     }
   );
 };
+
+export const leaveChatGroupApi = (token, groupid) => {
+  return http.put(
+    `/v1/users/profile/groups/${groupid}/leave`,
+    {},
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
+
+export const getAllGroupFirendApi = (token, friendId) => {
+  console.log("friendId", friendId);
+  return http.get(`/v1/users/profile/friends/${friendId}/groups`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

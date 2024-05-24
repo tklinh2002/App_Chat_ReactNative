@@ -82,8 +82,7 @@ const ChatScreen = ({ navigation, route }) => {
           stompClient = await connectSocket();
 
           try {
-            await stompClient.connect({}, async () => {
-              console.log("connect", "connect");
+            await stompClient.connect({Authorization: `Bearer ${token}`}, async () => {
               await stompClient.subscribe(
                 "/chatroom/" + chat?.chatId,
                 onPrivateMessageReceived
@@ -130,6 +129,8 @@ const ChatScreen = ({ navigation, route }) => {
   };
   const handleSendMessage = async (message, media, document) => {
     const attachments = [];
+    console.log("media", media.length);
+    console.log("document", document.length);
     await Promise.all(
       media.map(async (item) => {
         const res = await getLinkuploadApi(token, {

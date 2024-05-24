@@ -24,7 +24,7 @@ const ObjectReceive = ({ data, handleSubmit, handleReject }) => {
         <View style={styles.boxText}>
           {/* thay đổi tên  */}
           <Text style={styles.text}>{data.displayName}</Text>
-          <Text style={{ color: "gray" }}>{`${formatTime(data.profile.createdAt)} trước | Muốn kết bạn`}</Text>
+          <Text style={{ color: "gray" }}>{`${formatTime(data.profile.updatedAt)} trước | Muốn kết bạn`}</Text>
           {/* <Text style={[styles.text, styles.box]}>
             {data.title + "aaaaaaaaaaaaa"}
           </Text> */}

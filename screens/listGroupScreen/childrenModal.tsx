@@ -50,7 +50,7 @@ const ChildrenModal = ({ setmodalvisiable, navigation }) => {
           onPress={() => setmodalvisiable(false)}
         />
         <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>Nhóm mới</Text>
-        {listItem.length > 0 ? (
+        {listItem.length > 1 ? (
           <TouchableOpacity onPress={handleCreateGroup} style={styles.button}>
             <IconIonicons name="add" color="white" size={30} />
           </TouchableOpacity>

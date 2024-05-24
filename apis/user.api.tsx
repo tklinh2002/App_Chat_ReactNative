@@ -72,3 +72,25 @@ export const sendFriendRequestApi = (token, freindId) =>
       },
     }
   );
+
+  // thu hoi ket bạn
+  export const sendRecallFriendApi = (token, freindId) =>
+    http.put(
+      `/v1/users/profile/friends/${freindId}/cancel`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+//xoa
+    export const removeFriendApi = (token, freindId) =>
+      http.delete(
+        `/v1/users/profile/friends/${freindId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );

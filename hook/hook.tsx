@@ -16,7 +16,17 @@ import {
   updateGroupApi,
 } from "../apis/group.api";
 import { Alert } from "react-native";
-
+import {
+  acceptFriendApi,
+  blockFriendApi,
+  getListContactApi,
+  rejectFriendApi,
+  removeFriendApi,
+  unBlockFriendApi,
+} from "../apis/user.api";
+import { connectSocket, disconnectSocket } from "../utils/socket";
+import { useEffect, useState } from "react";
+import * as Notifications from 'expo-notifications';
 export const useChats = (data: getChatRoomRequest) => {
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
@@ -31,7 +41,7 @@ export const useChats = (data: getChatRoomRequest) => {
   return { getChatRoom, addReaction };
 };
 
-export const useGroup = () => {
+export const useGroup = (groupid?: string) => {
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
 
@@ -44,7 +54,7 @@ export const useGroup = () => {
   // Hook sử dụng react-query để lấy thông tin của một nhóm từ API
   const getGroupInfo = useQuery({
     queryKey: ["groupInfo"],
-    queryFn: (groupid) => getGroupInfoApi(token, groupid),
+    queryFn: () => getGroupInfoApi(token, groupid),
   });
 
   // Hook sử dụng react-query để thêm thành viên vào nhóm
@@ -60,8 +70,8 @@ export const useGroup = () => {
 
   // Hook sử dụng react-query để lấy danh sách thành viên trong một nhóm từ API
   const getListMemberInGroup = useQuery({
-    queryKey: ["listMemberInGroup"],
-    queryFn: (groupid) => getListMemberInGroupApi(token, groupid),
+    queryKey: ["listMemberInGroup", groupid],
+    queryFn: () => getListMemberInGroupApi(token, groupid),
   });
   type updateGroupRequest = {
     groupid: string;
@@ -85,9 +95,6 @@ export const useGroup = () => {
   const deleteGroup = useMutation({
     mutationKey: ["deleteGroup"],
     mutationFn: (groupid) => deleteGroupApi(token, groupid),
-    onSuccess: async () => {
-      await listGroupData.refetch();
-    },
   });
 
   type deleteMemberInGroupRequest = {
@@ -130,6 +137,7 @@ export const useGroup = () => {
       Alert.alert("Error", error.message);
     },
   });
+
   return {
     listGroupData,
     getGroupInfo,
@@ -139,6 +147,121 @@ export const useGroup = () => {
     deleteGroup,
     deleteMemberInGroup,
     leaveGroup,
-    changeRoleMemberInGroup
+    changeRoleMemberInGroup,
   };
+};
+
+export const useFriend = () => {
+  const queryClient = useQueryClient();
+  const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
+  // Hook sử dụng react-query để lấy danh sách bạn bè từ API
+  // Hook sử dụng react-query để chấp nhận lời mời kết bạn
+  const acceptFriend = useMutation({
+    mutationKey: ["acceptFriend"],
+    mutationFn: async (freindId) => await acceptFriendApi(token, freindId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["getListContact", "friend"],
+      });
+    },
+  });
+  // Hook sử dụng react-query để từ chối lời mời kết bạn
+  const rejectFriend = useMutation({
+    mutationKey: ["rejectFriend"],
+    mutationFn: (freindId) => rejectFriendApi(token, freindId),
+  });
+  // Hook sử dụng react-query để chặn bạn bè
+  const blockFriend = useMutation({
+    mutationKey: ["blockFriend"],
+    mutationFn: (freindId) => blockFriendApi(token, freindId),
+  });
+  // Hook sử dụng react-query để bỏ chặn bạn bè
+  const unBlockFriend = useMutation({
+    mutationKey: ["unBlockFriend"],
+    mutationFn: (freindId) => unBlockFriendApi(token, freindId),
+  });
+  const removeFriend = useMutation({
+    mutationKey: ["removeFriend"],
+    mutationFn: (freindId) => removeFriendApi(token, freindId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["getListContact", "friend"],
+      });
+    },
+  });
+  return {
+    acceptFriend,
+    rejectFriend,
+    blockFriend,
+    unBlockFriend,
+    removeFriend,
+  };
+};
+export const useSocket = () => {
+  const queryClient = useQueryClient();
+  const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
+  const userID = queryClient.getQueryData(["profile"])["id"];
+  const [subscription, setSubscription] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
+  const {
+    isLoading,
+    isError,
+    error,
+    data: stompClient,
+    refetch,
+  } = useQuery({
+    queryKey: ["stompClient"],
+    queryFn: () => connectSocket(),
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (stompClient) {
+      stompClient.connect({ Authorization: `Bearer ${token}` }, async () => {
+        const newSubscription = await stompClient.subscribe(
+          `/user/${userID}/private`,
+          onPrivateMessageReceived
+        );
+        setSubscription(newSubscription); // Store the subscription
+      });
+    }
+
+    return () => {
+      if (subscription) {
+        // Check if subscription exists
+        subscription.unsubscribe();
+      }
+    };
+  }, [stompClient, userID]);
+
+  const disconnect = () => {
+    if (stompClient) {
+      disconnectSocket();
+    }
+  };
+
+  const onPrivateMessageReceived = async (payload) => {
+    const data = JSON.parse(payload.body);
+    console.log("onPrivateMessageReceived", data);
+    if (data.type == "FRIEND_REQUEST") {
+      await queryClient.invalidateQueries({
+        queryKey: ["getListContact", "request"],
+      });
+    }
+    if(data.type == "NEW_MESSAGE"){
+      await queryClient.invalidateQueries({
+        queryKey: ["getListContact", "friend"],
+      });
+    }
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Look at that notification',
+        body: "I'm so proud of myself!",
+      },
+      trigger: null,
+    });
+    refetch(); // Gọi refetch để cập nhật dữ liệu từ server
+  };
+
+  return { isLoading, isError, error, stompClient, disconnect };
 };

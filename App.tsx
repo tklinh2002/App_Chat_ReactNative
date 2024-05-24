@@ -13,6 +13,8 @@ import { connectSocket } from "./utils/socket";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import OptionChatGroup from "./screens/optionScreen/optionChatGroup";
 import IconEntypo from "react-native-vector-icons/Entypo";
+import { Button } from "react-native-paper";
+import * as Notifications from "expo-notifications";
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -22,6 +24,7 @@ const App = () => {
       },
     },
   });
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
@@ -30,7 +33,9 @@ const App = () => {
       </NavigationContainer>
     </QueryClientProvider>
     // <View style={{ flex: 1, justifyContent: "center" }}>
-    //   <InputChat onSendMessage={"abc"} />
+    //   <Button icon="camera" mode="contained" onPress={handlepress}>
+    //     Press me
+    //   </Button>
     // </View>
     // <OptionChatGroup navigation={navigator}/>
   );

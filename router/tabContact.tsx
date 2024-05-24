@@ -1,6 +1,7 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ContactScreen from '../screens/contacScreen';
 import ListGroupScreen from '../screens/listGroupScreen';
+import { useSocket } from '../hook/hook';
 
 const Tab = createMaterialTopTabNavigator();
 

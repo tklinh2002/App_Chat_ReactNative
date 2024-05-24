@@ -1,18 +1,22 @@
 export const formatTime = (dateString: string) => {
   if (dateString == null) return null;
+
   const now = new Date();
-  const [datePart, timePart] = dateString.split(" ");
-  const [day, month, year] = datePart.split("-").map(Number);
-  const [hour, minute, second] = timePart.split(":").map(Number);
+  const [datePart, timePart] = dateString.split(' ');
+  const [day, month, year] = datePart.split('-').map(Number);
+  const [h, m, seconds] = timePart.split(':').map(Number);
 
-  const specificDate = new Date(year, month - 1, day, hour, minute, second);
+  const specificDate = new Date(year, month-1, day, h, m, seconds);
+  const timeDifference = now.getTime() - specificDate.getTime();
 
-  const timeDifference = specificDate.getTime() - now.getTime();
+  const millisecondsPerDay = 1000 * 60 * 60 * 24;
+  const millisecondsPerHour = 1000 * 60 * 60;
+  const millisecondsPerMinute = 1000 * 60;
 
-  const seconds = Math.abs(Math.floor(timeDifference / 1000));
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
+  const days = Math.floor(timeDifference / millisecondsPerDay);
+  const hours = Math.floor((timeDifference % millisecondsPerDay) / millisecondsPerHour);
+  const minutes = Math.floor((timeDifference % millisecondsPerHour) / millisecondsPerMinute);
+
   if (days > 0) {
     return `${days} ngày`;
   } else if (hours > 0) {

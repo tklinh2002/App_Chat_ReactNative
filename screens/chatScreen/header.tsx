@@ -12,7 +12,6 @@ const HearderChat = ({ navigation, item }) => {
   };
   
   const handOption = () => {
-    console.log("item", item);
     item?.isGroup
       ? navigation.navigate("OptionChatGroup", { item: item })
       : navigation.navigate("OptionChat", { item: item });

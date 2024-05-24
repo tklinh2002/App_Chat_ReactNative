@@ -10,10 +10,12 @@ import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import { getProfileAPI } from "../../apis/auth.api";
 import { connectSocket } from "../../utils/socket";
 import { getListContactApi } from "../../apis/user.api";
+import { useSocket } from "../../hook/hook";
 
 const ListChatScreen = ({ navigation }) => {
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
+  const { isLoading: isLoadingSocket, stompClient, disconnect } = useSocket()
   const getListChatRoom = useQuery({
     queryKey: ["getListChatRoom"],
     queryFn: async () =>
@@ -35,21 +37,12 @@ const ListChatScreen = ({ navigation }) => {
         })
         .catch((err) => console.log(err["response"])),
   });
-  const getProfile = useQuery({
-    queryKey: ["getProfile"],
-    queryFn: async () =>
-      await getProfileAPI(token)
-        .then((res) => {
-          queryClient.setQueryData(["profile"], res.data);
-          return res.data;
-        })
-        .catch((err) => console.log(err)),
-  });
+  
   // useEffect(() => {
   //   getListChatRoom.refetch(); // Refetch chat room list when component mounts
   // }, []);
 
-  if (getListChatRoom.isLoading || getProfile.isLoading|| getListContact.isLoading)
+  if (getListChatRoom.isLoading|| getListContact.isLoading)
     return <Text>Loading...</Text>;
   // console.log(getListChatRoom.data);
   return (

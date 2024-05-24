@@ -23,6 +23,7 @@ import {
   deleteMemberInGroupApi,
   getGroupInfoApi,
   getListMemberInGroupApi,
+  leaveChatGroupApi,
   updateGroupApi,
 } from "../../apis/group.api";
 import { useCallback, useEffect, useState } from "react";
@@ -32,7 +33,8 @@ import { sendFriendRequestApi } from "../../apis/user.api";
 import { CheckBox } from "@rneui/themed";
 import { useFocusEffect } from "@react-navigation/native";
 import { useGroup } from "../../hook/hook";
-const OptionChatGroup = ({ route }) => {
+import ModalLoading from "../components/modalLoading";
+const OptionChatGroup = ({ route, navigation }) => {
   const { item } = route.params;
   const id = item.groupId;
   const queryClient = useQueryClient();
@@ -40,8 +42,7 @@ const OptionChatGroup = ({ route }) => {
   const userID = queryClient.getQueryData(["profile"])["id"];
   const [listMember, setListMember] = useState([]);
   const [role, setRole] = useState("");
-  // const [infoGroup, setInfoGroup] = useState(null);
-  const [listContact, setListContact] = useState([]); // contact chưa lọc
+  const [listContact, setListContact] = useState([]);
   const [image, setImage] = useState(null);
   const [modalInfo, setModalInfo] = useState(false);
   const [modalListMember, setModalListMember] = useState(false);
@@ -52,7 +53,7 @@ const OptionChatGroup = ({ route }) => {
   const [selectUser, setSelectUser] = useState(null);
   // State để lưu trữ trạng thái kiểm tra của từng thành viên
   const [checkedItems, setCheckedItems] = useState({});
-  const { changeRoleMemberInGroup } = useGroup();
+  const { changeRoleMemberInGroup, deleteGroup, getListMemberInGroup } = useGroup();
   // Hàm xử lý sự kiện khi checkbox được thay đổi
   const handleCheckChange = (id) => {
     setCheckedItems((prevState) => ({
@@ -67,7 +68,7 @@ const OptionChatGroup = ({ route }) => {
   const filteredContacts = contacts.filter((item) => {
     if (!searchText.trim()) return true;
     const fullName =
-      `${item.profile.firstName} ${item.profile.lastName}`.toLowerCase();
+      `${item?.profile?.firstName} ${item?.profile?.lastName}`.toLowerCase();
     return fullName.includes(searchText.toLowerCase());
   });
   const getGroupInfo = useQuery({
@@ -75,10 +76,6 @@ const OptionChatGroup = ({ route }) => {
     queryFn: () =>
       getGroupInfoApi(token, id)
         .then((res) => {
-          // setInfoGroup({
-          //   name: res.data.name,
-          //   thumbnailAvatar: res.data.thumbnailAvatar,
-          // });
           setImage({ uri: res.data.thumbnailAvatar });
           return res.data;
         })
@@ -86,7 +83,7 @@ const OptionChatGroup = ({ route }) => {
   });
 
   const getlistMember = useQuery({
-    queryKey: ["listMember", id],
+    queryKey: ["listMemberInGroup", id],
     queryFn: () =>
       getListMemberInGroupApi(token, id)
         .then((res) => {
@@ -94,13 +91,13 @@ const OptionChatGroup = ({ route }) => {
         })
         .catch((err) => console.log(err)),
   });
+  
   useEffect(() => {
     const fetchListMember = async () => {
       await getlistMember.refetch();
     };
     fetchListMember();
-  }, []);
-
+  }, [getlistMember.data]);
   useEffect(() => {
     if (getlistMember.data) {
       const userRole = getlistMember.data.find(
@@ -126,7 +123,11 @@ const OptionChatGroup = ({ route }) => {
       setContacts(filteredContact);
     }
   }, [getlistMember.data]);
-  if (getGroupInfo.isLoading || getlistMember.isLoading)
+  if (
+    getGroupInfo.isLoading ||
+    getlistMember.isLoading ||
+    getlistMember.isRefetching
+  )
     return <Text>Loading...</Text>;
 
   const pickImage = async () => {
@@ -155,7 +156,6 @@ const OptionChatGroup = ({ route }) => {
               name: getGroupInfo.data.name,
               thumbnailAvatar: image?.uri,
             };
-
             await updateGroupApi(token, id, infoGroup);
             await queryClient.invalidateQueries({ queryKey: ["group", id] });
             setModalInfo(false);
@@ -231,8 +231,82 @@ const OptionChatGroup = ({ route }) => {
       { cancelable: true }
     );
   };
-  const handleDeleteGroup = () => {};
-  const handleOutGroup = () => {};
+  const handleDeleteGroup = async () => {
+    Alert.alert(
+      "Xác nhận",
+      "Bạn có chắc chắn muốn xóa nhóm không?",
+      [
+        {
+          text: "Hủy",
+          style: "cancel",
+        },
+        {
+          text: "Đồng ý",
+          onPress: async () => {
+            try {
+              await deleteGroup
+                .mutateAsync(id)
+                .then(async () => {
+                  await queryClient.invalidateQueries({
+                    queryKey: ["getListChatRoom"],
+                  });
+                  await queryClient.invalidateQueries({
+                    queryKey: ["getListGroup"],
+                  });
+                  navigation.navigate("ListChat");
+                  alert("Xóa nhóm thành công");
+                })
+                .catch((err) => {
+                  alert(err.response.data.detail);
+                });
+            } catch (err) {
+              console.log(err);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+  const handleOutGroup = async () => {
+    Alert.alert(
+      "Xác nhận",
+      "Bạn có chắc chắn muốn rời khỏi nhóm không?",
+      [
+        {
+          text: "Hủy",
+          style: "cancel",
+        },
+        {
+          text: "Đồng ý",
+          onPress: async () => {
+            try {
+              await leaveChatGroupApi(token, id)
+                .then(async (res) => {
+                  await queryClient
+                    .invalidateQueries({
+                      queryKey: ["getListChatRoom"],
+                    })
+                    .then(() => {
+                      navigation.navigate("ListChat");
+                      alert("Rời nhóm thành công");
+                    })
+                    .catch((err) => {
+                      alert(err.response.data.detail);
+                    });
+                })
+                .catch((err) => {
+                  alert(err.response.data.detail);
+                });
+            } catch (err) {
+              console.log(err);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
   const handSendAddFriend = async (friendid) => {
     Alert.alert(
       "Xác nhận",
@@ -280,7 +354,7 @@ const OptionChatGroup = ({ route }) => {
     <ScrollView style={styles.container}>
       <View style={styles.containerHeader}>
         <Avatar
-          size="xlarge"
+          size="medium"
           rounded
           title={getGroupInfo.data.name[0]}
           source={{ uri: getGroupInfo.data.thumbnailAvatar }}
@@ -338,7 +412,7 @@ const OptionChatGroup = ({ route }) => {
               }}
             >
               <IconAntDesign name="adduser" color="black" size={25} />
-              <Text style={styles.text}>{"Xóa thành viên khỏi nhóm"}</Text>
+              <Text style={styles.text}>Xóa thành viên khỏi nhóm</Text>
             </TouchableOpacity>
             {role === "GROUP_LEADER" ? (
               <>
@@ -347,14 +421,14 @@ const OptionChatGroup = ({ route }) => {
                   onPress={() => setModalChangeRole(true)}
                 >
                   <IconFontAwesome5 name="user-edit" color="black" size={25} />
-                  <Text style={styles.text}>{"Thay đổi role"}</Text>
+                  <Text style={styles.text}>Thay đổi role</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.objectList}
                   onPress={handleDeleteGroup}
                 >
                   <IconSimpleLineIcons name="trash" color="black" size={25} />
-                  <Text style={styles.text}>{"Giải tán nhóm"}</Text>
+                  <Text style={styles.text}>Giải tán nhóm</Text>
                 </TouchableOpacity>
               </>
             ) : null}
@@ -362,7 +436,7 @@ const OptionChatGroup = ({ route }) => {
         ) : null}
         <TouchableOpacity style={styles.objectList} onPress={handleOutGroup}>
           <IconSimpleLineIcons name="trash" color="black" size={25} />
-          <Text style={styles.text}>{"Rời nhóm"}</Text>
+          <Text style={styles.text}>Rời nhóm</Text>
         </TouchableOpacity>
       </View>
       {/* modal doi thongg tin nhom */}
@@ -386,7 +460,7 @@ const OptionChatGroup = ({ route }) => {
           >
             <TouchableOpacity onPress={pickImage}>
               <Avatar
-                size="xlarge"
+                size="medium"
                 rounded
                 title={getGroupInfo.data.name[0]}
                 source={{ uri: image?.uri }}
@@ -463,7 +537,7 @@ const OptionChatGroup = ({ route }) => {
                   <View style={{ marginLeft: 10, flex: 1 }}>
                     {/* thay đổi tên  */}
                     <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-                      {item.profile.firstName + " " + item.profile.lastName}
+                      {item?.profile?.firstName + " " + item?.profile?.lastName}
                     </Text>
                     <Text style={{ fontSize: 12 }}>
                       {item.role === "GROUP_LEADER"
@@ -474,12 +548,12 @@ const OptionChatGroup = ({ route }) => {
                     </Text>
                   </View>
                   {!listContact.some(
-                    (contact) => contact.profile.id === item.profile.id
+                    (contact) => contact?.profile?.id === item?.profile?.id
                   ) &&
                     item.profile.id !== userID && (
                       <TouchableOpacity
                         style={{ marginRight: 5 }}
-                        onPress={() => handSendAddFriend(item.profile.id)}
+                        onPress={() => handSendAddFriend(item?.profile?.id)}
                       >
                         <IconAntDesign name="adduser" color="black" size={25} />
                       </TouchableOpacity>
@@ -540,7 +614,7 @@ const OptionChatGroup = ({ route }) => {
                     uncheckedIcon="circle-o"
                   />
                   <Avatar
-                    size="xlarge"
+                    size="medium"
                     rounded
                     title={item.profile.lastName[0]}
                     source={{ uri: item.profile.thumbnailAvatar }}
@@ -548,7 +622,7 @@ const OptionChatGroup = ({ route }) => {
                   <View style={{ marginLeft: 10 }}>
                     {/* thay đổi tên  */}
                     <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-                      {item.profile.firstName + " " + item.profile.lastName}
+                      {item?.profile?.firstName + " " + item?.profile?.lastName}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -713,7 +787,9 @@ const OptionChatGroup = ({ route }) => {
                     <View style={{ marginLeft: 10 }}>
                       {/* thay đổi tên  */}
                       <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-                        {item.profile.firstName + " " + item.profile.lastName}
+                        {item?.profile?.firstName +
+                          " " +
+                          item?.profile?.lastName}
                       </Text>
                       <Text style={{ fontSize: 12 }}>
                         {item?.role === "GROUP_LEADER"
@@ -736,10 +812,13 @@ const OptionChatGroup = ({ route }) => {
           >
             <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
               <View style={styles.modalContainer}>
+                <ModalLoading visible={changeRoleMemberInGroup.isPending} />
                 <View style={styles.modalContent}>
                   <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                     Chọn role cho{" "}
-                    {selectUser?.profile?.firstName + " " + selectUser?.profile?.lastName}
+                    {selectUser?.profile?.firstName +
+                      " " +
+                      selectUser?.profile?.lastName}
                   </Text>
                   {selectUser?.role == "MEMBER" ? (
                     <Button

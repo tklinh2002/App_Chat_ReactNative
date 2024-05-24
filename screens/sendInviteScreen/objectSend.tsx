@@ -23,7 +23,7 @@ const ObjectSend = ({ data, handleCancel }) => {
         />
         <Text style={{ fontSize: 18, flex: 1 }}>{data.displayName}</Text>
         <TouchableOpacity
-        onPress={()=>handleCancel(data.profile.id)}
+          onPress={() => handleCancel(data.profile.id)}
           style={[
             styles.button,
             { backgroundColor: "#E0E0E0", marginRight: 10 },

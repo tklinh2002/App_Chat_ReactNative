@@ -7,9 +7,11 @@ import { Avatar } from "react-native-elements";
 const ObjectGroup = ({ item, navigation }) => {
   const handPress = () => {
     const chatRoom = {
-      id : item.chatId,
+      id: item.chatId,
       name: item.name,
-    }
+      groupId: item.id,
+      isGroup: true,
+    };
     navigation.navigate("Chat", { chatRoom: chatRoom });
   };
 

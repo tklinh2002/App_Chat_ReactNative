@@ -8,7 +8,6 @@ import { connectSocket } from "../../utils/socket";
 import { useQuery } from "@tanstack/react-query";
 const ObjectChat = ({ chatRoom, navigation }) => {
   const handPress = () => {
-    console.log("chatRoom", chatRoom);
     navigation.navigate("Chat", { chatRoom: chatRoom });
   };
   // useEffect(() => {

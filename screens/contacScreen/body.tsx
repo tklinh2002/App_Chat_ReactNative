@@ -4,27 +4,42 @@ import {
   StyleSheet,
   SectionList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import IconFontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import styles from "./styles";
 import Friend from "./friend";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getListContactApi } from "../../apis/user.api";
+import { useFriend } from "../../hook/hook";
 
 const BodyContact = () => {
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData(["dataLogin"])["accessToken"];
   const navigation = useNavigation();
   const [contacts, setContacts] = useState([]);
+  const { removeFriend } = useFriend();
 
-  useEffect(() => {
-    setContacts([
-      ...(queryClient.getQueryData(["getListContact", "friend"]) as []),
-    ]);
-  }, []);
-  // Sort contacts alphabetically by name
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchContacts = async () => {
+        const contactsQuery = (await queryClient.getQueryData([
+          "getListContact",
+          "friend",
+        ])) as any;
+        if (contactsQuery) {
+          setContacts(contactsQuery);
+        }
+      };
+
+      fetchContacts();
+
+      return () => {
+        // Cleanup (nếu cần)
+      };
+    }, [queryClient, token])
+  );
   const sortedContacts = contacts
     .slice()
     .sort((a, b) => a.displayName.localeCompare(b.displayName));
@@ -46,6 +61,31 @@ const BodyContact = () => {
   const handPressInvite = () => {
     navigation.navigate("TabInvite" as never);
   };
+  const handleRemoveFriend = async (id) => {
+    Alert.alert("Xác nhận", "Bạn có chắc chắn muốn xóa bạn này?", [
+      {
+        text: "Hủy",
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: "Xóa",
+        onPress: async () => {
+          await removeFriend
+            .mutateAsync(id)
+            .then((res) => {
+              setContacts(
+                contacts.filter((contact) => contact?.profile?.id !== id)
+              );
+              alert(res.data);
+            })
+            .catch((err) => {
+              alert(err?.response?.data?.detail);
+            });
+        },
+      },
+    ]);
+  };
   return (
     <View style={{ marginTop: 5 }}>
       <TouchableOpacity style={styles.header} onPress={handPressInvite}>
@@ -63,7 +103,11 @@ const BodyContact = () => {
           </View>
         )}
         renderItem={({ item }) => (
-          <Friend item={item} navigation={navigation} />
+          <Friend
+            item={item}
+            navigation={navigation}
+            handleRemoveFriend={handleRemoveFriend}
+          />
         )}
       />
     </View>

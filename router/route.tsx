@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+  import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignInScreen from "../screens/signInScreen/index";
 import HomeScreen from "../screens/homeScreen/index";
 import TabChat from "./tabChat";

@@ -35,7 +35,7 @@ const FindScreen = ({ navigation, route }) => {
       
       }).then((res) => {
         const data = res.data;
-        console.log('Thông tin người dùng:', data);
+
         setData(data);
         setThumbnailAvatar(data.thumbnailAvatar)
       }).catch((error) => {

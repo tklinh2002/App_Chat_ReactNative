@@ -11,7 +11,7 @@ import {
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { loginAPI } from "../../apis/auth.api";
+import { getProfileAPI, loginAPI } from "../../apis/auth.api";
 import axios from "axios";
 
 const SignInScreen = ({ navigation }) => {
@@ -32,13 +32,19 @@ const SignInScreen = ({ navigation }) => {
 
   const login = useMutation({
     mutationFn: async (_) => loginAPI(phoneNumber, password),
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       queryClient.setQueryData(["dataLogin"], data.data);
-      console.log(data.data);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'TabChat' }],
-    });
+
+      await getProfileAPI(data.data.accessToken)
+        .then((res) => {
+          queryClient.setQueryData(["profile"], res.data);
+          return res.data;
+        })
+        .catch((err) => console.log(err)),
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "TabChat" }],
+        });
     },
     onError: (error) => {
       Alert.alert(

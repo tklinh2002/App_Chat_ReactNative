@@ -56,7 +56,6 @@ const ProfileScreen = ({ navigation, route }) => {
             })
                 .then((res) => {
                     const data = res.data;
-                    console.log('Thông tin người dùng:', data);
                     setData(data);
                     setFirstName(data.firstName);
                     setLastName(data.lastName);
